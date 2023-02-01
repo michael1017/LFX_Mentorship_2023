@@ -1,31 +1,10 @@
-#include <wasmedge/wasmedge.h>
-#include <stdbool.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include "argparse.h"
 
-bool is_null_ptr(const void* ptr, const char* func_name) {
-  if (ptr != NULL) return false;
-  fprintf(stderr, _BOLD_RED "ERROR =>" _RESET_COLOR \
-    " function '%s' get null pointer\n", func_name);
-  return true;
-}
+#include "baseutil.h"
 
-Option* create_Option(char* opt_name, int args_len) {
-  Option* opt = malloc(sizeof(Option));
-  opt->opt_name = opt_name;
-  opt->args_len = args_len;
-  opt->args = NULL;
-  opt->found = false;
-  return opt;
-}
-
-void delete_Option(Option* opt) {
-  free(opt);
-  return;
-}
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 ParseData* create_ParseData(void) {
   ParseData* pd = malloc(sizeof(ParseData));
@@ -50,16 +29,6 @@ void show_pd(const ParseData* pd) {
 
   printf("---remain_arg---\n");
   show_opt(pd->remain_arg);
-  return;
-}
-
-void show_opt(const Option* opt) {
-  printf("opt_name: %s\n", opt->opt_name);
-  printf("args_len: %d\n", opt->args_len);
-  printf("found: %d\n", opt->found);
-  for (int i=0; i<opt->args_len; i++) {
-    printf("args[%d]: %s\n", i, opt->args[i]);
-  }
   return;
 }
 
