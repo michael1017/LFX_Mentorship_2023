@@ -20,6 +20,12 @@ void delete_Option(Option* opt) {
   return;
 }
 
+void delete_Option_array(Option** opt, int opt_len) {
+  for (int i=0; i<opt_len; i++) {
+    delete_Option(opt[i]);
+  }
+}
+
 bool show_opt(const Option* opt) {
   if (is_null_ptr(opt, __func__)) return _FAILED;
   printf("opt_name: %s\n", opt->opt_name);

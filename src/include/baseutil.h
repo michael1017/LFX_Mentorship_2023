@@ -10,5 +10,7 @@
 #define _NOT_FOUND -1
 
 bool is_null_ptr(const void* , const char* );
+bool is_file_exist(const char* );
+bool is_valid_digit_string(const char* );
 
 #endif /* BASEUTIL_H */

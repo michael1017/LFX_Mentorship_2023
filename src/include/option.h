@@ -13,6 +13,7 @@ struct opt{
 
 Option* create_Option(char* , int );
 void delete_Option(Option* );
+void delete_Option_array(Option** , int );
 
 bool show_opt(const Option* );
 

@@ -21,6 +21,7 @@ void delete_ParseData(ParseData* pd) {
 }
 
 void show_pd(const ParseData* pd) {
+  printf("Total Option Length: %d\n", pd->opt_len);
   for (int i=0; i<pd->opt_len; i++) {
     printf("---option %d---\n", i);
     show_opt(pd->opt[i]);
