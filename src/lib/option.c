@@ -26,13 +26,13 @@ void delete_Option_array(Option** opt, int opt_len) {
   }
 }
 
-bool show_opt(const Option* opt) {
-  if (is_null_ptr(opt, __func__)) return _FAILED;
+void show_opt(const Option* opt) {
+  if (is_null_ptr(opt, __func__)) return;
   printf("opt_name: %s\n", opt->opt_name);
   printf("args_len: %d\n", opt->args_len);
   printf("found: %d\n", opt->found);
   for (int i=0; i<opt->args_len; i++) {
     printf("args[%d]: %s\n", i, opt->args[i]);
   }
-  return _SUCCESS;
+  return;
 }
