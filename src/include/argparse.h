@@ -17,11 +17,10 @@ void delete_ParseData(ParseData* );
 
 void show_pd(const ParseData* );
 
-bool set_pd_option(ParseData* , const Option** , const int );
 bool _set_option_args(Option* , int* , const int , const char** );
 
 bool get_option_index(int* , const Option** , const int , const char* );
 
-bool handle_parse(ParseData* , const int , const char** );
+bool handle_parse(ParseData* , const Option** , const int , const int , const char** );
 
 #endif /* ARGPARSE_H */

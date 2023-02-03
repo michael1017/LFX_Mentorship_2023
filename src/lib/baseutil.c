@@ -5,8 +5,7 @@
 
 bool is_null_ptr(const void* ptr, const char* func_name) {
   if (ptr != NULL) return false;
-  fprintf(stderr, _BOLD_RED "ERROR =>" _RESET_COLOR \
-    " function '%s' get null pointer\n", func_name);
+  fprintf(stderr, _ERROR_SIG "function '%s' get null pointer\n", func_name);
   return true;
 }
 
@@ -23,11 +22,15 @@ bool is_valid_digit_string(const char* str) {
   const char nine = '9';
   int idx = 1;
   // first char could be [+], [-], and [0~9]
-  if (str[0] != pos && str[0] != neg && !(zero <= str[0] && str[0] <= nine)) return false;
-
+  if (str[0] != pos && str[0] != neg && !(zero <= str[0] && str[0] <= nine)) {
+    return false;
+  }
   // the remaining could be [0~9]
   while (str[idx] != '\0') {
-    if (!(zero <= str[0] && str[0] <= nine)) return false;
+    if (!(zero <= str[idx] && str[idx] <= nine)){
+      return false;
+    } 
+    idx += 1;
   }
   
   return true;

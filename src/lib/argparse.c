@@ -21,6 +21,8 @@ void delete_ParseData(ParseData* pd) {
 }
 
 void show_pd(const ParseData* pd) {
+  if (is_null_ptr(pd, __func__)) return;
+
   printf("Total Option Length: %d\n", pd->opt_len);
   for (int i=0; i<pd->opt_len; i++) {
     printf("---option %d---\n", i);
@@ -33,23 +35,20 @@ void show_pd(const ParseData* pd) {
   return;
 }
 
-bool set_pd_option(ParseData* pd, const Option** opt, const int opt_len) {
-  if (is_null_ptr(pd, __func__)) return _FAILED;
-
-  pd->opt_len = opt_len;
-  pd->opt = (Option** )opt;
-
-  return _SUCCESS;
-}
-
 bool _set_option_args(Option* opt, int* arg_idx, const int argc, const char** argv) {
   if (is_null_ptr(opt, __func__)) return _FAILED;
   if (is_null_ptr(arg_idx, __func__)) return _FAILED;
-  if (*arg_idx >= argc) return _FAILED; // illegal arg_idx
-
+  if (*arg_idx >= argc) {// illegal arg_idx
+    fprintf(stderr, _ERROR_SIG "%s: illegal arg_idx, arg_idx >= argc\n", __func__);
+    return _FAILED; 
+  }
+  
   int remain_arg_len = argc - *arg_idx;
   if (opt->args_len < 0) opt->args_len = remain_arg_len; // get all args
-  if (opt->args_len > remain_arg_len) return _FAILED; // too few args
+  if (opt->args_len > remain_arg_len){ // too few args
+    fprintf(stderr, _ERROR_SIG "%s: Too few args for the option: %s\n", __func__, opt->opt_name);
+    return _FAILED;
+  }
 
   // set args, found
   opt->found = true;
@@ -78,17 +77,23 @@ bool get_option_index(int* index, const Option** opt, const int opt_len, const c
   return _SUCCESS;
 }
 
-bool handle_parse(ParseData* pd, const int argc, const char** argv) {
+bool handle_parse(ParseData* pd, const Option** opt, const int opt_len, const int argc, const char** argv) {
   if (is_null_ptr(pd, __func__)) return _FAILED;
-  int arg_idx = 1;
 
+  int arg_idx = 1;
   int opt_idx;
   bool state;
+  
+  pd->opt_len = opt_len;
+  pd->opt = (Option** )opt;
+
   while (arg_idx < argc) {
     // get option index
     state = get_option_index(&opt_idx, (const Option ** )pd->opt, pd->opt_len, argv[arg_idx]);
-    if (state == _FAILED) return _FAILED;
-
+    if (state == _FAILED) {
+      fprintf(stderr, _ERROR_SIG "%s: 'get_option_index' failed\n", __func__);
+      return _FAILED;
+    }
     // pass args
     if (opt_idx == _NOT_FOUND) { // pass args for remain_arg
       state = _set_option_args(pd->remain_arg, &arg_idx, argc, argv);
@@ -97,7 +102,10 @@ bool handle_parse(ParseData* pd, const int argc, const char** argv) {
       arg_idx++;
       state = _set_option_args(pd->opt[opt_idx], &arg_idx, argc, argv);
     }
-    if (state == _FAILED) return _FAILED;
+    if (state == _FAILED){
+      fprintf(stderr, _ERROR_SIG "%s: '_set_option_args' failed\n", __func__);
+      return _FAILED;
+    }
   }
   return _SUCCESS;
 }
