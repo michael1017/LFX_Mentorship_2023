@@ -3,3 +3,5 @@ src/test_build
 x
 x_testall
 .vscode
+test.profdata
+test.profraw

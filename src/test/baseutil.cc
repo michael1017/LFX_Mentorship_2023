@@ -39,6 +39,7 @@ TEST(baseutil, is_valid_digit_string) {
     EXPECT_FALSE(is_valid_digit_string("023-"));
     EXPECT_FALSE(is_valid_digit_string("aA"));
     EXPECT_FALSE(is_valid_digit_string("%"));
+    
     EXPECT_TRUE (is_valid_digit_string("+"));
     EXPECT_TRUE (is_valid_digit_string("-"));
     EXPECT_TRUE (is_valid_digit_string("+0123456789"));

@@ -12,9 +12,9 @@ struct opt{
 };
 
 Option* create_Option(char* , int );
-void delete_Option(Option* );
-void delete_Option_array(Option** , int );
+bool delete_Option(Option* );
+bool delete_Option_array(Option** , int );
 
-void show_opt(const Option* );
+bool show_opt(const Option* );
 
 #endif /* OPTION_H */

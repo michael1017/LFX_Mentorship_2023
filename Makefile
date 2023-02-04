@@ -2,7 +2,8 @@
 CC = clang
 CXX = clang++
 
-CFLAGS = -Wall -Wextra -O2 
+EXTRAFLAGS = -fprofile-instr-generate -fcoverage-mapping
+CFLAGS = -Wall -Wextra -O2 $(EXTRAFLAGS)
 CXXFLAGS = $(CFLAGS) -pthread
 WASMFLAGS = -lwasmedge
 GTEST = /usr/local/lib/libgtest.a
