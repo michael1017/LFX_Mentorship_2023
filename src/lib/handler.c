@@ -111,7 +111,7 @@ bool handle_option(const ParseData* pd) {
   if (opt_run_idx != -1) {
     state = handle_option_wasm_arg(pd->opt[opt_run_idx]);
   }
-  else if (pd->remain_arg->args_len != 0) { // expect to be wasm arg
+  else if (pd->remain_arg->found == true) { // expect to be wasm arg
     state = handle_option_wasm_arg(pd->remain_arg);
   }
   if (state == _FAILED){

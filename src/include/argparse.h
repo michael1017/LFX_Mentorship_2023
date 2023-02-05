@@ -13,14 +13,14 @@ struct pd{
 };
 
 ParseData* create_ParseData(void);
-void delete_ParseData(ParseData* );
+bool delete_ParseData(ParseData* );
 
-void show_pd(const ParseData* );
+bool show_pd(const ParseData* );
 
 bool _set_option_args(Option* , int* , const int , const char** );
 
 bool get_option_index(int* , const Option** , const int , const char* );
 
-bool handle_parse(ParseData* , const Option** , const int , const int , const char** );
+bool handle_parse(ParseData* , Option** , const int , const int , const char** );
 
 #endif /* ARGPARSE_H */

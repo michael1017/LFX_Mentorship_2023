@@ -45,7 +45,7 @@ TEST(option, delete_Option) {
 }
 
 TEST(option, delete_Option_array) {
-    Option* define_opt[] = {create_Option("version", 0), create_Option("run", -1)};
+    Option* define_opt[] = {create_Option((char*)"version", 0), create_Option((char*)"run", -1)};
 
     EXPECT_EQ(delete_Option_array(NULL, -1), _FAILED);
     EXPECT_EQ(delete_Option_array(NULL, 10), _FAILED);

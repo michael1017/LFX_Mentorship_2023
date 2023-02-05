@@ -5,3 +5,4 @@ x_testall
 .vscode
 test.profdata
 test.profraw
+default.profraw
