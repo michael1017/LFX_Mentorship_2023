@@ -2,6 +2,9 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <limits.h>
 
 bool is_null_ptr(const void* ptr, const char* func_name) {
   if (ptr != NULL) return false;
@@ -33,5 +36,13 @@ bool is_valid_digit_string(const char* str) {
     idx += 1;
   }
   
+  long val = strtol(str, NULL, 10);
+  if ((val == LONG_MIN && errno == ERANGE) || val < -2147483648) { // underflow
+    return false;
+  }
+  else if ((val == LONG_MAX && errno == ERANGE) || val > 2147483647) { // overflow
+    return false;
+  }
+
   return true;
 }
