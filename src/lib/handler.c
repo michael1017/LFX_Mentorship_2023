@@ -115,7 +115,7 @@ bool handle_option(const ParseData* pd) {
     state = handle_option_wasm_arg(pd->remain_arg);
   }
   if (state == _FAILED){
-    fprintf(stderr, _ERROR_SIG "%s: handle_option_version failed\n", __func__);
+    fprintf(stderr, _ERROR_SIG "%s: handle_option_wasm_arg failed\n", __func__);
     return _FAILED;
   }
 

@@ -2,7 +2,7 @@
 CC = clang
 CXX = clang++
 
-EXTRAFLAGS = -fprofile-instr-generate -fcoverage-mapping
+EXTRAFLAGS = 
 CFLAGS = -Wall -Wextra -O2 $(EXTRAFLAGS)
 CXXFLAGS = $(CFLAGS) -pthread
 WASMFLAGS = -lwasmedge
