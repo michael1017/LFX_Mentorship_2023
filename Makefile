@@ -8,8 +8,6 @@ CXXFLAGS = $(CFLAGS) -pthread
 WASMFLAGS = -lwasmedge
 GTEST = /usr/local/lib/libgtest.a
 
-SRC_PREFIX = ./src
-MAIN_FILE = ./src/main.c
 BUILD = ./src/build
 TEST_BUILD = ./src/test_build
 
@@ -17,6 +15,8 @@ TARGET = x
 TEST_TARGET = x_testall
 ############## CONFIG SECTION END ##############
 
+SRC_PREFIX = ./src
+MAIN_FILE = ./src/main.c
 INCLUDE = $(SRC_PREFIX)/include
 LIB = $(SRC_PREFIX)/lib
 TEST = $(SRC_PREFIX)/test

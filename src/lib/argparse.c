@@ -39,7 +39,7 @@ bool show_pd(const ParseData* pd) {
 bool _set_option_args(Option* opt, int* arg_idx, const int argc, const char** argv) {
   if (is_null_ptr(opt, __func__)) return _FAILED;
   if (is_null_ptr(arg_idx, __func__)) return _FAILED;
-  if (*arg_idx >= argc) {// illegal arg_idx
+  if (*arg_idx >= argc && opt->args_len > 0) {// illegal arg_idx
     fprintf(stderr, _ERROR_SIG "%s: illegal arg_idx, arg_idx >= argc\n", __func__);
     return _FAILED; 
   }

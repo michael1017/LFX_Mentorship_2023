@@ -6,3 +6,4 @@ x_testall
 test.profdata
 test.profraw
 default.profraw
+test_out
