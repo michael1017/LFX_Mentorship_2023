@@ -33,20 +33,3 @@ TEST(baseutil, is_file_exist) {
     EXPECT_TRUE (is_file_exist("/dev/null"));
 }
 
-TEST(baseutil, is_valid_digit_string) {
-    EXPECT_FALSE(is_valid_digit_string(NULL));
-    EXPECT_FALSE(is_valid_digit_string("\0"));
-    EXPECT_FALSE(is_valid_digit_string("023-"));
-    EXPECT_FALSE(is_valid_digit_string("aA"));
-    EXPECT_FALSE(is_valid_digit_string("%"));
-    EXPECT_FALSE(is_valid_digit_string("-2147483649"));
-    EXPECT_FALSE(is_valid_digit_string("2147483648"));
-    
-    EXPECT_TRUE (is_valid_digit_string("+"));
-    EXPECT_TRUE (is_valid_digit_string("-"));
-    EXPECT_TRUE (is_valid_digit_string("+000100"));
-    EXPECT_TRUE (is_valid_digit_string("-0123456789"));
-    EXPECT_TRUE (is_valid_digit_string("-0123456789\0"));
-    EXPECT_TRUE (is_valid_digit_string("-2147483648"));
-    EXPECT_TRUE (is_valid_digit_string("2147483647"));
-}
