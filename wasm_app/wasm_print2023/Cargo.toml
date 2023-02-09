@@ -1,0 +1,12 @@
+[package]
+name = "print2023"
+version = "0.1.0"
+authors = ["ubuntu"]
+edition = "2018"
+
+[lib]
+name = "print2023"
+path = "print2023.rs"
+crate-type =["cdylib"]
+
+[dependencies]

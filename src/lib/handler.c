@@ -7,41 +7,35 @@
 #include <stdlib.h>
 #include <string.h>
 
-bool is_valid_wasm_arg(const Option* opt) {
-  bool state;
-  state = is_file_exist(opt->args[0]);
-  if (state == false){
-    fprintf(stderr, _ERROR_SIG "%s: the file '%s' not exist\n", __func__, opt->args[0]);
-    return false;
-  } 
-
-  return true;
-}
-
 bool handle_option_version(void) {
   printf("WasmEdge version: %s\n", WasmEdge_VersionGet());
   return _SUCCESS;
 }
 
 bool handle_option_wasm_arg(const Option* opt) {
-    bool state;
-    state = is_valid_wasm_arg(opt);
-    if (state == false){
-      fprintf(stderr, _ERROR_SIG "%s: invalid wasm arg\n", __func__);
-      show_opt(opt);
-      return _FAILED;
-    } 
-
     // Create VM
     WasmEdge_ConfigureContext *ConfCxt = WasmEdge_ConfigureCreate();
     WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_Wasi);
+    WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_WasmEdge_Process);
+    WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_WasiNN);
+    WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_WasiCrypto_Common);
+    WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_WasiCrypto_AsymmetricCommon);
+    WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_WasiCrypto_Kx);
+    WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_WasiCrypto_Signatures);
+    WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_WasiCrypto_Symmetric);
     WasmEdge_VMContext *VMCxt = WasmEdge_VMCreate(ConfCxt, NULL);
     WasmEdge_ModuleInstanceContext* ModCxt = WasmEdge_VMGetImportModuleContext(VMCxt, WasmEdge_HostRegistration_Wasi);
     WasmEdge_Result Res;
     // WasmEdge_Async* AsyncCxt;
 
     // VM State Forward
-    WasmEdge_VMLoadWasmFromFile(VMCxt, opt->args[0]);
+    Res = WasmEdge_VMLoadWasmFromFile(VMCxt, opt->args[0]);
+    if (!WasmEdge_ResultOK(Res)) {
+      fprintf(stderr, _ERROR_SIG "%s\n", WasmEdge_ResultGetMessage(Res));
+      WasmEdge_ConfigureDelete(ConfCxt);
+      WasmEdge_VMDelete(VMCxt);
+      return _FAILED;
+    }
     WasmEdge_VMValidate(VMCxt);
     WasmEdge_VMInstantiate(VMCxt);
 
@@ -52,6 +46,13 @@ bool handle_option_wasm_arg(const Option* opt) {
     // Get [Param, Return] Type and Length
     uint32_t ParamLen = WasmEdge_FunctionTypeGetParametersLength(FuncType);
     uint32_t ReturnLen = WasmEdge_FunctionTypeGetReturnsLength(FuncType);
+    if (ParamLen + 1 != (unsigned int)opt->args_len && !(ParamLen == 0 && ReturnLen == 0)) {
+      fprintf(stderr, _ERROR_SIG "Mismatch ParamLen and ArgsLen\n");
+      WasmEdge_ConfigureDelete(ConfCxt);
+      WasmEdge_VMDelete(VMCxt);
+      WasmEdge_StringDelete(FuncName);
+      return _FAILED;
+    }
     enum WasmEdge_ValType* ParamBuf = malloc(sizeof(enum WasmEdge_ValType) * ParamLen);
     enum WasmEdge_ValType* ReturnBuf = malloc(sizeof(enum WasmEdge_ValType) * ReturnLen);
     WasmEdge_FunctionTypeGetParameters(FuncType, ParamBuf, ParamLen);
