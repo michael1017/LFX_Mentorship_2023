@@ -15,14 +15,6 @@ bool is_valid_wasm_arg(const Option* opt) {
     return false;
   } 
 
-  for (int i=1; i<opt->args_len; i++) {
-    state = is_valid_digit_string(opt->args[i]); // [+|-][0-9]
-    if (state == false) {
-      fprintf(stderr, _ERROR_SIG "%s: arg '%s' is not valid digit string\n", __func__, opt->args[i]);
-      return false;
-    } 
-  }
-
   return true;
 }
 
@@ -40,50 +32,81 @@ bool handle_option_wasm_arg(const Option* opt) {
       return _FAILED;
     } 
 
-    //////////////////////////////// Disallow Return Start ////////////////////////////////
+    // Create VM
     WasmEdge_ConfigureContext *ConfCxt = WasmEdge_ConfigureCreate();
     WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_Wasi);
     WasmEdge_VMContext *VMCxt = WasmEdge_VMCreate(ConfCxt, NULL);
+    WasmEdge_ModuleInstanceContext* ModCxt = WasmEdge_VMGetImportModuleContext(VMCxt, WasmEdge_HostRegistration_Wasi);
+    WasmEdge_Result Res;
+    // WasmEdge_Async* AsyncCxt;
 
-    // Low Buffer Size
-    // Since we just want the first function
-    const uint32_t BUF_LEN = 1;
-    WasmEdge_String FuncNames[BUF_LEN];
+    // VM State Forward
     WasmEdge_VMLoadWasmFromFile(VMCxt, opt->args[0]);
     WasmEdge_VMValidate(VMCxt);
     WasmEdge_VMInstantiate(VMCxt);
 
-    uint32_t RealFuncNum = WasmEdge_VMGetFunctionList(VMCxt, FuncNames, NULL, BUF_LEN);
-    if (RealFuncNum > 1) {
-      printf(_WARNING_SIG "The program only excute the first function in .wasm file\n");
-      printf(_WARNING_SIG "Detected %u functions in %s file\n", RealFuncNum, opt->args[0]);
-      // TODO: show function name
+    // Get Function Type Context
+    WasmEdge_String FuncName = WasmEdge_StringCreateByCString("_start");
+    const WasmEdge_FunctionTypeContext* FuncType = WasmEdge_VMGetFunctionType(VMCxt, FuncName);
+
+    // Get [Param, Return] Type and Length
+    uint32_t ParamLen = WasmEdge_FunctionTypeGetParametersLength(FuncType);
+    uint32_t ReturnLen = WasmEdge_FunctionTypeGetReturnsLength(FuncType);
+    enum WasmEdge_ValType* ParamBuf = malloc(sizeof(enum WasmEdge_ValType) * ParamLen);
+    enum WasmEdge_ValType* ReturnBuf = malloc(sizeof(enum WasmEdge_ValType) * ReturnLen);
+    WasmEdge_FunctionTypeGetParameters(FuncType, ParamBuf, ParamLen);
+    WasmEdge_FunctionTypeGetReturns(FuncType, ReturnBuf, ReturnLen);
+    WasmEdge_Value* Params = malloc(ParamLen * sizeof(WasmEdge_Value));
+    WasmEdge_Value* Returns = malloc(ReturnLen * sizeof(WasmEdge_Value));
+
+    // Run Wasi
+    WasmEdge_ModuleInstanceInitWASI(ModCxt, (const char *const *)opt->args, opt->args_len, NULL, 0, NULL, 0);
+
+    // Setup wasm Params and Returns from raw ParseData
+    for (uint32_t i=0; i<ParamLen && i+1<(unsigned int)opt->args_len; i++) {
+      if (ParamBuf[i] == WasmEdge_ValType_I32) {
+        Params[i] = WasmEdge_ValueGenI32(atoi(opt->args[i+1]));
+      } else if (ParamBuf[i] == WasmEdge_ValType_I64) {
+        Params[i] = WasmEdge_ValueGenI64(atoll(opt->args[i+1]));
+      } else if (ParamBuf[i] == WasmEdge_ValType_F32) {
+        Params[i] = WasmEdge_ValueGenF32(atof(opt->args[i+1]));
+      } else if (ParamBuf[i] == WasmEdge_ValType_F64) {
+        Params[i] = WasmEdge_ValueGenF64(strtod(opt->args[i+1], NULL));
+      }
+      /// TODO: V128, NullRef, FuncRef and ExternRef
+      /// TOOD: Create String to V128 Convertor
     }
-
-
-    // Setup wasm params and return
-    int Params_len = opt->args_len-1;
-    WasmEdge_Value* Params = malloc(Params_len * sizeof(WasmEdge_Value));
-    WasmEdge_Value Returns[1];
-    for (int i=0; i<Params_len; i++) {
-      Params[i] = WasmEdge_ValueGenI32(atoi(opt->args[i+1]));
+    
+    Res = WasmEdge_VMExecute(VMCxt, FuncName, Params, ParamLen, Returns, ReturnLen);
+    // AsyncCxt = WasmEdge_VMAsyncExecute(VMCxt, FuncName, Params, ParamLen);
+    // Res = WasmEdge_AsyncGet(AsyncCxt, Returns, ReturnLen);
+    for (uint32_t i=0; i<ReturnLen; i++) {
+      if (ReturnBuf[i] == WasmEdge_ValType_I32) {
+        printf("%d\n", WasmEdge_ValueGetI32(Returns[i]));
+      } else if (ReturnBuf[i] == WasmEdge_ValType_I64) {
+        printf("%ld\n", WasmEdge_ValueGetI64(Returns[i]));
+      } else if (ReturnBuf[i] == WasmEdge_ValType_F32) {
+        printf("%f\n", WasmEdge_ValueGetF32(Returns[i]));
+      } else if (ReturnBuf[i] == WasmEdge_ValType_F64) {
+        printf("%lf\n", WasmEdge_ValueGetF64(Returns[i]));
+      }
+      /// TODO: V128, NullRef, FuncRef and ExternRef
+      /// TOOD: Create V128 printer
     }
-
-    WasmEdge_Result Res = WasmEdge_VMExecute(VMCxt, FuncNames[0], Params, Params_len, Returns, 1);
-
 
     /* Resources deallocations. */
-    free(Params);
-    WasmEdge_VMDelete(VMCxt);
     WasmEdge_ConfigureDelete(ConfCxt);
-    //////////////////////////////// Disallow Return End ////////////////////////////////
-
+    WasmEdge_VMDelete(VMCxt);
+    WasmEdge_StringDelete(FuncName);
+    free(ParamBuf);
+    free(ReturnBuf);
+    free(Params);
+    free(Returns);
+  
     if (!WasmEdge_ResultOK(Res)) {
       fprintf(stderr, _ERROR_SIG "%s\n", WasmEdge_ResultGetMessage(Res));
       return _FAILED;
     }
-
-    printf("Get result: %d\n", WasmEdge_ValueGetI32(Returns[0]));
     return _SUCCESS;
 }
 
