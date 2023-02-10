@@ -1,6 +1,9 @@
 # Customize Makefile
+
 ## Introduction
+
 The things can be custimize
+
 1. Compiler
 2. Compile Flags
 3. Build Directory
@@ -8,7 +11,8 @@ The things can be custimize
 5. Location of libgtest.a
 
 In Makefile, you can see the following option at the start and setup manually.
-```
+
+```make
 ############# CONFIG SECTION START #############
 CC = clang
 CXX = clang++
@@ -28,7 +32,9 @@ TEST_TARGET = x_testall
 ```
 
 For temporary setup, you can run in the following way:
-```
+
+```bash
 make CC=gcc all
 ```
+
 By doing so, the C compiler will be changed to gcc for once.

@@ -16,13 +16,6 @@ bool handle_option_wasm_arg(const Option* opt) {
     // Create VM
     WasmEdge_ConfigureContext *ConfCxt = WasmEdge_ConfigureCreate();
     WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_Wasi);
-    WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_WasmEdge_Process);
-    WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_WasiNN);
-    WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_WasiCrypto_Common);
-    WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_WasiCrypto_AsymmetricCommon);
-    WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_WasiCrypto_Kx);
-    WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_WasiCrypto_Signatures);
-    WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_WasiCrypto_Symmetric);
     WasmEdge_VMContext *VMCxt = WasmEdge_VMCreate(ConfCxt, NULL);
     WasmEdge_ModuleInstanceContext* ModCxt = WasmEdge_VMGetImportModuleContext(VMCxt, WasmEdge_HostRegistration_Wasi);
     WasmEdge_Result Res;
@@ -60,10 +53,10 @@ bool handle_option_wasm_arg(const Option* opt) {
     WasmEdge_Value* Params = malloc(ParamLen * sizeof(WasmEdge_Value));
     WasmEdge_Value* Returns = malloc(ReturnLen * sizeof(WasmEdge_Value));
 
-    // Run Wasi
+    // Init Wasi
     WasmEdge_ModuleInstanceInitWASI(ModCxt, (const char *const *)opt->args, opt->args_len, NULL, 0, NULL, 0);
 
-    // Setup wasm Params and Returns from raw ParseData
+    // Setup wasm Params from raw ParseData
     for (uint32_t i=0; i<ParamLen && i+1<(unsigned int)opt->args_len; i++) {
       if (ParamBuf[i] == WasmEdge_ValType_I32) {
         Params[i] = WasmEdge_ValueGenI32(atoi(opt->args[i+1]));
@@ -78,9 +71,12 @@ bool handle_option_wasm_arg(const Option* opt) {
       /// TOOD: Create String to V128 Convertor
     }
     
+    // Execute
     Res = WasmEdge_VMExecute(VMCxt, FuncName, Params, ParamLen, Returns, ReturnLen);
     // AsyncCxt = WasmEdge_VMAsyncExecute(VMCxt, FuncName, Params, ParamLen);
     // Res = WasmEdge_AsyncGet(AsyncCxt, Returns, ReturnLen);
+    
+    // Get Return Data
     for (uint32_t i=0; i<ReturnLen; i++) {
       if (ReturnBuf[i] == WasmEdge_ValType_I32) {
         printf("%d\n", WasmEdge_ValueGetI32(Returns[i]));
