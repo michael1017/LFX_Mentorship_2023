@@ -17,7 +17,7 @@ int main(const int argc, const char** argv) {
   int define_opt_len = sizeof(define_opt)/sizeof(Option*);
   
   handle_parse(pd, (Option ** )define_opt, define_opt_len, argc, argv);
-  show_pd(pd);
+  // show_pd(pd);
 
   handle_option(pd);
 

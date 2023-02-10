@@ -1,0 +1,12 @@
+[package]
+name = "circle_area_f64"
+version = "0.1.0"
+authors = ["ubuntu"]
+edition = "2018"
+
+[lib]
+name = "circle_area_f64"
+path = "circle_area_f64.rs"
+crate-type =["cdylib"]
+
+[dependencies]

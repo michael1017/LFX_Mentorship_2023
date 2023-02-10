@@ -1,0 +1,12 @@
+[package]
+name = "add3"
+version = "0.1.0"
+authors = ["ubuntu"]
+edition = "2018"
+
+[lib]
+name = "add3"
+path = "add3.rs"
+crate-type =["cdylib"]
+
+[dependencies]

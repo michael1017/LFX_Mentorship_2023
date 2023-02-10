@@ -7,31 +7,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-bool is_valid_wasm_arg(const Option* opt) {
-  bool state;
-  state = is_file_exist(opt->args[0]);
-  if (state == false){
-    fprintf(stderr, _ERROR_SIG "%s: the file '%s' not exist\n", __func__, opt->args[0]);
-    return false;
-  } 
-
-  return true;
-}
-
 bool handle_option_version(void) {
   printf("WasmEdge version: %s\n", WasmEdge_VersionGet());
   return _SUCCESS;
 }
 
 bool handle_option_wasm_arg(const Option* opt) {
-    bool state;
-    state = is_valid_wasm_arg(opt);
-    if (state == false){
-      fprintf(stderr, _ERROR_SIG "%s: invalid wasm arg\n", __func__);
-      show_opt(opt);
-      return _FAILED;
-    } 
-
     // Create VM
     WasmEdge_ConfigureContext *ConfCxt = WasmEdge_ConfigureCreate();
     WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_Wasi);
@@ -41,7 +22,13 @@ bool handle_option_wasm_arg(const Option* opt) {
     // WasmEdge_Async* AsyncCxt;
 
     // VM State Forward
-    WasmEdge_VMLoadWasmFromFile(VMCxt, opt->args[0]);
+    Res = WasmEdge_VMLoadWasmFromFile(VMCxt, opt->args[0]);
+    if (!WasmEdge_ResultOK(Res)) {
+      fprintf(stderr, _ERROR_SIG "%s\n", WasmEdge_ResultGetMessage(Res));
+      WasmEdge_ConfigureDelete(ConfCxt);
+      WasmEdge_VMDelete(VMCxt);
+      return _FAILED;
+    }
     WasmEdge_VMValidate(VMCxt);
     WasmEdge_VMInstantiate(VMCxt);
 
@@ -52,6 +39,13 @@ bool handle_option_wasm_arg(const Option* opt) {
     // Get [Param, Return] Type and Length
     uint32_t ParamLen = WasmEdge_FunctionTypeGetParametersLength(FuncType);
     uint32_t ReturnLen = WasmEdge_FunctionTypeGetReturnsLength(FuncType);
+    if (ParamLen + 1 != (unsigned int)opt->args_len && !(ParamLen == 0 && ReturnLen == 0)) {
+      fprintf(stderr, _ERROR_SIG "Mismatch ParamLen and ArgsLen\n");
+      WasmEdge_ConfigureDelete(ConfCxt);
+      WasmEdge_VMDelete(VMCxt);
+      WasmEdge_StringDelete(FuncName);
+      return _FAILED;
+    }
     enum WasmEdge_ValType* ParamBuf = malloc(sizeof(enum WasmEdge_ValType) * ParamLen);
     enum WasmEdge_ValType* ReturnBuf = malloc(sizeof(enum WasmEdge_ValType) * ReturnLen);
     WasmEdge_FunctionTypeGetParameters(FuncType, ParamBuf, ParamLen);
@@ -59,10 +53,10 @@ bool handle_option_wasm_arg(const Option* opt) {
     WasmEdge_Value* Params = malloc(ParamLen * sizeof(WasmEdge_Value));
     WasmEdge_Value* Returns = malloc(ReturnLen * sizeof(WasmEdge_Value));
 
-    // Run Wasi
+    // Init Wasi
     WasmEdge_ModuleInstanceInitWASI(ModCxt, (const char *const *)opt->args, opt->args_len, NULL, 0, NULL, 0);
 
-    // Setup wasm Params and Returns from raw ParseData
+    // Setup wasm Params from raw ParseData
     for (uint32_t i=0; i<ParamLen && i+1<(unsigned int)opt->args_len; i++) {
       if (ParamBuf[i] == WasmEdge_ValType_I32) {
         Params[i] = WasmEdge_ValueGenI32(atoi(opt->args[i+1]));
@@ -77,9 +71,12 @@ bool handle_option_wasm_arg(const Option* opt) {
       /// TOOD: Create String to V128 Convertor
     }
     
+    // Execute
     Res = WasmEdge_VMExecute(VMCxt, FuncName, Params, ParamLen, Returns, ReturnLen);
     // AsyncCxt = WasmEdge_VMAsyncExecute(VMCxt, FuncName, Params, ParamLen);
     // Res = WasmEdge_AsyncGet(AsyncCxt, Returns, ReturnLen);
+    
+    // Get Return Data
     for (uint32_t i=0; i<ReturnLen; i++) {
       if (ReturnBuf[i] == WasmEdge_ValType_I32) {
         printf("%d\n", WasmEdge_ValueGetI32(Returns[i]));
