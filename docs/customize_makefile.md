@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The things can be custimize
+The things can be customized
 
 1. Compiler
 2. Compile Flags
