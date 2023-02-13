@@ -41,7 +41,7 @@ bool _handle_option_wasm_arg(const Option *opt) {
   // Get [Param, Return] Type and Length
   uint32_t ParamLen = WasmEdge_FunctionTypeGetParametersLength(FuncType);
   uint32_t ReturnLen = WasmEdge_FunctionTypeGetReturnsLength(FuncType);
-  if (ParamLen + 1 != (unsigned int)opt->args_len && !(ParamLen == 0 && ReturnLen == 0)) {
+  if (ParamLen + 1 != (unsigned int)opt->args_len && ParamLen != 0) {
     fprintf(stderr, _ERROR_SIG "Mismatch ParamLen and ArgsLen\n");
     WasmEdge_ConfigureDelete(ConfCxt);
     WasmEdge_VMDelete(VMCxt);
