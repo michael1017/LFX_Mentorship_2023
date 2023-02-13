@@ -10,9 +10,9 @@ extern "C" {
 #include <string.h>
 #include <wasmedge/wasmedge.h>
 
-TEST(handler, handle_option_version) { EXPECT_EQ(handle_option_version(), _SUCCESS); }
+TEST(handler, _handle_option_version) { EXPECT_EQ(_handle_option_version(), _SUCCESS); }
 
-TEST(handler, handle_option_wasm_arg) {
+TEST(handler, _handle_option_wasm_arg) {
   // The Test may fail due to wasm file non-exist
   Option *opt = create_Option(NULL, -1);
   opt->found = true;
@@ -21,7 +21,7 @@ TEST(handler, handle_option_wasm_arg) {
     opt->args_len = sizeof(args) / sizeof(char *);
     opt->args = args;
 
-    EXPECT_EQ(handle_option_wasm_arg(opt), _SUCCESS);
+    EXPECT_EQ(_handle_option_wasm_arg(opt), _SUCCESS);
   }
   {
     char *args[] = {(char *)"wasm_app/wasm/add3.wasm", (char *)"1111", (char *)"2222",
@@ -29,21 +29,21 @@ TEST(handler, handle_option_wasm_arg) {
     opt->args_len = sizeof(args) / sizeof(char *);
     opt->args = args;
 
-    EXPECT_EQ(handle_option_wasm_arg(opt), _SUCCESS);
+    EXPECT_EQ(_handle_option_wasm_arg(opt), _SUCCESS);
   }
   {
     char *args[] = {(char *)"wasm_app/wasm/circle_area_f32.wasm", (char *)"5"};
     opt->args_len = sizeof(args) / sizeof(char *);
     opt->args = args;
 
-    EXPECT_EQ(handle_option_wasm_arg(opt), _SUCCESS);
+    EXPECT_EQ(_handle_option_wasm_arg(opt), _SUCCESS);
   }
   {
     char *args[] = {(char *)"wasm_app/wasm/circle_area_f64.wasm", (char *)"5"};
     opt->args_len = sizeof(args) / sizeof(char *);
     opt->args = args;
 
-    EXPECT_EQ(handle_option_wasm_arg(opt), _SUCCESS);
+    EXPECT_EQ(_handle_option_wasm_arg(opt), _SUCCESS);
   }
   {
     char *args[] = {(char *)"wasm_app/wasm/hello.wasm", (char *)"second",
@@ -51,7 +51,7 @@ TEST(handler, handle_option_wasm_arg) {
     opt->args_len = sizeof(args) / sizeof(char *);
     opt->args = args;
 
-    EXPECT_EQ(handle_option_wasm_arg(opt), _SUCCESS);
+    EXPECT_EQ(_handle_option_wasm_arg(opt), _SUCCESS);
   }
   {
     char *args[] = {(char *)"wasm_app/wasm/print2023.wasm", (char *)"second",
@@ -59,21 +59,21 @@ TEST(handler, handle_option_wasm_arg) {
     opt->args_len = sizeof(args) / sizeof(char *);
     opt->args = args;
 
-    EXPECT_EQ(handle_option_wasm_arg(opt), _SUCCESS);
+    EXPECT_EQ(_handle_option_wasm_arg(opt), _SUCCESS);
   }
   {
     char *args[] = {(char *)"wasm_app/wasm/hello.wa", (char *)"second", (char *)"state"};
     opt->args_len = sizeof(args) / sizeof(char *);
     opt->args = args;
 
-    EXPECT_EQ(handle_option_wasm_arg(opt), _FAILED);
+    EXPECT_EQ(_handle_option_wasm_arg(opt), _FAILED);
   }
   {
     char *args[] = {(char *)"wasm_app/wasm/add.wasm", (char *)"1111"};
     opt->args_len = sizeof(args) / sizeof(char *);
     opt->args = args;
 
-    EXPECT_EQ(handle_option_wasm_arg(opt), _FAILED);
+    EXPECT_EQ(_handle_option_wasm_arg(opt), _FAILED);
   }
   {
     char *args[] = {(char *)"wasm_app/wasm/add.wasm", (char *)"1111", (char *)"1111",
@@ -81,7 +81,7 @@ TEST(handler, handle_option_wasm_arg) {
     opt->args_len = sizeof(args) / sizeof(char *);
     opt->args = args;
 
-    EXPECT_EQ(handle_option_wasm_arg(opt), _FAILED);
+    EXPECT_EQ(_handle_option_wasm_arg(opt), _FAILED);
   }
   delete_Option(opt);
 }

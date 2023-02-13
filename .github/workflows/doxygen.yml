@@ -1,5 +1,4 @@
-name: Doxygen Action
-uses: mattnotmitt/doxygen-action@1.9.5
+name: Doxygen CI
 
 on:
   push:
@@ -7,6 +6,16 @@ on:
   pull_request:
     branches: [ "master" ]
 
-with:
-    doxyfile-path: 'docs/doxygen'
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Doxygen Action
+      uses: mattnotmitt/doxygen-action@1.9.5
+      with:
+        doxyfile-path: 'docs/doxygen'
+        enable-latex: true
     enable-latex: true

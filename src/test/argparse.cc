@@ -88,38 +88,38 @@ TEST(argparse, _set_option_args) {
   EXPECT_EQ(_set_option_args(define_opt[2], &arg_idx2, fake_argc2, fake_argv2), _FAILED);
 }
 
-TEST(argparse, get_option_index) {
+TEST(argparse, _get_option_index) {
   int index;
 
   Option *define_opt[] = {create_Option((char *)"a", 0), create_Option((char *)"b", 2),
                           create_Option((char *)"c", -1)};
   int define_opt_len = sizeof(define_opt) / sizeof(Option *);
   // NULL INDEX TEST
-  EXPECT_EQ(get_option_index(NULL, (const Option **)define_opt, define_opt_len,
+  EXPECT_EQ(_get_option_index(NULL, (const Option **)define_opt, define_opt_len,
                              (const char *)"a"),
             _FAILED);
 
   // NULL OPT TEST
-  EXPECT_EQ(get_option_index(&index, NULL, define_opt_len, (const char *)"a"), _SUCCESS);
+  EXPECT_EQ(_get_option_index(&index, NULL, define_opt_len, (const char *)"a"), _SUCCESS);
   EXPECT_EQ(index, _NOT_FOUND);
 
   // TEST 1-1
-  EXPECT_EQ(get_option_index(&index, (const Option **)define_opt, define_opt_len,
+  EXPECT_EQ(_get_option_index(&index, (const Option **)define_opt, define_opt_len,
                              (const char *)"a"),
             _SUCCESS);
   EXPECT_EQ(index, 0);
   // TEST 1-2
-  EXPECT_EQ(get_option_index(&index, (const Option **)define_opt, define_opt_len,
+  EXPECT_EQ(_get_option_index(&index, (const Option **)define_opt, define_opt_len,
                              (const char *)"b"),
             _SUCCESS);
   EXPECT_EQ(index, 1);
   // TEST 1-3
-  EXPECT_EQ(get_option_index(&index, (const Option **)define_opt, define_opt_len,
+  EXPECT_EQ(_get_option_index(&index, (const Option **)define_opt, define_opt_len,
                              (const char *)"c"),
             _SUCCESS);
   EXPECT_EQ(index, 2);
   // TEST 1-4
-  EXPECT_EQ(get_option_index(&index, (const Option **)define_opt, define_opt_len,
+  EXPECT_EQ(_get_option_index(&index, (const Option **)define_opt, define_opt_len,
                              (const char *)"d"),
             _SUCCESS);
   EXPECT_EQ(index, _NOT_FOUND);
