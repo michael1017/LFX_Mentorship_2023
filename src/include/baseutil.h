@@ -10,7 +10,15 @@
 #define _FAILED false
 #define _NOT_FOUND -1
 
-bool is_null_ptr(const void *, const char *);
-bool is_file_exist(const char *);
+/// @brief Check if the pointer is a null pointer.
+/// @param ptr the pointer to check is null or not.
+/// @param func_name Use __func__ to identify which function found a null pointer.
+/// @return If is null pointer, return true. If not, return false.
+bool is_null_ptr(const void *ptr, const char *func_name);
+
+/// @brief Check If file exists or not.
+/// @param fname is the file path.
+/// @return If exists, return true. If not, return false.
+bool is_file_exist(const char *fname);
 
 #endif /* BASEUTIL_H */
