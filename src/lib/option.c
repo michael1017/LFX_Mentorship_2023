@@ -26,8 +26,7 @@ bool delete_Option_array(Option **opt, int opt_len) {
   if (is_null_ptr(opt, __func__))
     return _FAILED;
   if (opt_len < 0) {
-    fprintf(stderr, _ERROR_SIG "%s: delete_Option_array got opt_len < 0\n",
-            __func__);
+    fprintf(stderr, _ERROR_SIG "%s: delete_Option_array got opt_len < 0\n", __func__);
     return _FAILED;
   }
   for (int i = 0; i < opt_len; i++) {

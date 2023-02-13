@@ -38,15 +38,13 @@ bool show_pd(const ParseData *pd) {
   return _SUCCESS;
 }
 
-bool _set_option_args(Option *opt, int *arg_idx, const int argc,
-                      const char **argv) {
+bool _set_option_args(Option *opt, int *arg_idx, const int argc, const char **argv) {
   if (is_null_ptr(opt, __func__))
     return _FAILED;
   if (is_null_ptr(arg_idx, __func__))
     return _FAILED;
   if (*arg_idx >= argc && opt->args_len > 0) { // illegal arg_idx
-    fprintf(stderr, _ERROR_SIG "%s: illegal arg_idx, arg_idx >= argc\n",
-            __func__);
+    fprintf(stderr, _ERROR_SIG "%s: illegal arg_idx, arg_idx >= argc\n", __func__);
     return _FAILED;
   }
 
@@ -54,8 +52,8 @@ bool _set_option_args(Option *opt, int *arg_idx, const int argc,
   if (opt->args_len < 0)
     opt->args_len = remain_arg_len;     // get all args
   if (opt->args_len > remain_arg_len) { // too few args
-    fprintf(stderr, _ERROR_SIG "%s: Too few args for the option: %s\n",
-            __func__, opt->opt_name);
+    fprintf(stderr, _ERROR_SIG "%s: Too few args for the option: %s\n", __func__,
+            opt->opt_name);
     return _FAILED;
   }
 
@@ -92,8 +90,8 @@ bool get_option_index(int *index, const Option **opt, const int opt_len,
   return _SUCCESS;
 }
 
-bool handle_parse(ParseData *pd, Option **opt, const int opt_len,
-                  const int argc, const char **argv) {
+bool handle_parse(ParseData *pd, Option **opt, const int opt_len, const int argc,
+                  const char **argv) {
   if (is_null_ptr(pd, __func__))
     return _FAILED;
 
@@ -106,8 +104,8 @@ bool handle_parse(ParseData *pd, Option **opt, const int opt_len,
 
   while (arg_idx < argc) {
     // get option index
-    state = get_option_index(&opt_idx, (const Option **)pd->opt, pd->opt_len,
-                             argv[arg_idx]);
+    state =
+        get_option_index(&opt_idx, (const Option **)pd->opt, pd->opt_len, argv[arg_idx]);
     if (state == _FAILED) {
       fprintf(stderr, _ERROR_SIG "%s: 'get_option_index' failed\n", __func__);
       return _FAILED;
