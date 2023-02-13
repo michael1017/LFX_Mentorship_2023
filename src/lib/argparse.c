@@ -67,8 +67,8 @@ bool _set_option_args(Option *opt, int *arg_idx, const int argc, const char **ar
   return _SUCCESS;
 }
 
-bool get_option_index(int *index, const Option **opt, const int opt_len,
-                      const char *target) {
+bool _get_option_index(int *index, const Option **opt, const int opt_len,
+                       const char *target) {
   if (is_null_ptr(index, __func__))
     return _FAILED;
   if (opt == NULL || opt_len <= 0) {
@@ -105,7 +105,7 @@ bool handle_parse(ParseData *pd, Option **opt, const int opt_len, const int argc
   while (arg_idx < argc) {
     // get option index
     state =
-        get_option_index(&opt_idx, (const Option **)pd->opt, pd->opt_len, argv[arg_idx]);
+        _get_option_index(&opt_idx, (const Option **)pd->opt, pd->opt_len, argv[arg_idx]);
     if (state == _FAILED) {
       fprintf(stderr, _ERROR_SIG "%s: 'get_option_index' failed\n", __func__);
       return _FAILED;

@@ -7,12 +7,12 @@
 #include <string.h>
 #include <wasmedge/wasmedge.h>
 
-bool handle_option_version(void) {
+bool _handle_option_version(void) {
   printf("WasmEdge version: %s\n", WasmEdge_VersionGet());
   return _SUCCESS;
 }
 
-bool handle_option_wasm_arg(const Option *opt) {
+bool _handle_option_wasm_arg(const Option *opt) {
   // Create VM
   WasmEdge_ConfigureContext *ConfCxt = WasmEdge_ConfigureCreate();
   WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_Wasi);
@@ -119,7 +119,7 @@ bool handle_option(const ParseData *pd) {
       continue;
 
     if (strcmp("version", pd->opt[i]->opt_name) == 0) { // Option version
-      state = handle_option_version();
+      state = _handle_option_version();
       if (state == _FAILED) {
         fprintf(stderr, _ERROR_SIG "%s: handle_option_version failed\n", __func__);
         return _FAILED;
@@ -132,9 +132,9 @@ bool handle_option(const ParseData *pd) {
 
   // run wasm app
   if (opt_run_idx != -1) {
-    state = handle_option_wasm_arg(pd->opt[opt_run_idx]);
+    state = _handle_option_wasm_arg(pd->opt[opt_run_idx]);
   } else if (pd->remain_arg->found == true) { // expect to be wasm arg
-    state = handle_option_wasm_arg(pd->remain_arg);
+    state = _handle_option_wasm_arg(pd->remain_arg);
   }
   if (state == _FAILED) {
     fprintf(stderr, _ERROR_SIG "%s: handle_option_wasm_arg failed\n", __func__);
