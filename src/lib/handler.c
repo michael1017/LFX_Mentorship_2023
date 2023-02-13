@@ -20,7 +20,7 @@ bool _handle_option_wasm_arg(const Option *opt) {
   WasmEdge_ModuleInstanceContext *ModCxt =
       WasmEdge_VMGetImportModuleContext(VMCxt, WasmEdge_HostRegistration_Wasi);
   WasmEdge_Result Res;
-  // WasmEdge_Async* AsyncCxt;
+  WasmEdge_Async *AsyncCxt;
 
   // VM State Forward
   Res = WasmEdge_VMLoadWasmFromFile(VMCxt, opt->args[0]);
@@ -38,9 +38,8 @@ bool _handle_option_wasm_arg(const Option *opt) {
   const WasmEdge_FunctionTypeContext *FuncType =
       WasmEdge_VMGetFunctionType(VMCxt, FuncName);
 
-  // Get [Param, Return] Type and Length
+  // Get Param Type and Length
   uint32_t ParamLen = WasmEdge_FunctionTypeGetParametersLength(FuncType);
-  uint32_t ReturnLen = WasmEdge_FunctionTypeGetReturnsLength(FuncType);
   if (ParamLen + 1 != (unsigned int)opt->args_len && ParamLen != 0) {
     fprintf(stderr, _ERROR_SIG "Mismatch ParamLen and ArgsLen\n");
     WasmEdge_ConfigureDelete(ConfCxt);
@@ -49,11 +48,8 @@ bool _handle_option_wasm_arg(const Option *opt) {
     return _FAILED;
   }
   enum WasmEdge_ValType *ParamBuf = malloc(sizeof(enum WasmEdge_ValType) * ParamLen);
-  enum WasmEdge_ValType *ReturnBuf = malloc(sizeof(enum WasmEdge_ValType) * ReturnLen);
   WasmEdge_FunctionTypeGetParameters(FuncType, ParamBuf, ParamLen);
-  WasmEdge_FunctionTypeGetReturns(FuncType, ReturnBuf, ReturnLen);
   WasmEdge_Value *Params = malloc(ParamLen * sizeof(WasmEdge_Value));
-  WasmEdge_Value *Returns = malloc(ReturnLen * sizeof(WasmEdge_Value));
 
   // Init Wasi
   WasmEdge_ModuleInstanceInitWASI(ModCxt, (const char *const *)opt->args, opt->args_len,
@@ -75,11 +71,17 @@ bool _handle_option_wasm_arg(const Option *opt) {
   }
 
   // Execute
-  Res = WasmEdge_VMExecute(VMCxt, FuncName, Params, ParamLen, Returns, ReturnLen);
-  // AsyncCxt = WasmEdge_VMAsyncExecute(VMCxt, FuncName, Params, ParamLen);
-  // Res = WasmEdge_AsyncGet(AsyncCxt, Returns, ReturnLen);
+  // Res = WasmEdge_VMExecute(VMCxt, FuncName, Params, ParamLen, Returns, ReturnLen);
+  AsyncCxt = WasmEdge_VMAsyncExecute(VMCxt, FuncName, Params, ParamLen);
+
+  // Get Return Type and Length
+  uint32_t ReturnLen = WasmEdge_FunctionTypeGetReturnsLength(FuncType);
+  enum WasmEdge_ValType *ReturnBuf = malloc(sizeof(enum WasmEdge_ValType) * ReturnLen);
+  WasmEdge_FunctionTypeGetReturns(FuncType, ReturnBuf, ReturnLen);
+  WasmEdge_Value *Returns = malloc(ReturnLen * sizeof(WasmEdge_Value));
 
   // Get Return Data
+  Res = WasmEdge_AsyncGet(AsyncCxt, Returns, ReturnLen);
   for (uint32_t i = 0; i < ReturnLen; i++) {
     if (ReturnBuf[i] == WasmEdge_ValType_I32) {
       printf("%d\n", WasmEdge_ValueGetI32(Returns[i]));
