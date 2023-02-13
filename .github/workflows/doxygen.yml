@@ -1,0 +1,12 @@
+name: Doxygen Action
+uses: mattnotmitt/doxygen-action@1.9.5
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+with:
+    doxyfile-path: 'docs/doxygen'
+    enable-latex: true
