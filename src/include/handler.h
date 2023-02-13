@@ -5,7 +5,7 @@
 #include "option.h"
 
 bool handle_option_version(void);
-bool handle_option_wasm_arg(const Option* );
-bool handle_option(const ParseData* );
+bool handle_option_wasm_arg(const Option *);
+bool handle_option(const ParseData *);
 
 #endif /* HANDLER_H */
