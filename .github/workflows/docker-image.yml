@@ -4,11 +4,9 @@ on:
   push:
     branch:
       - master
-      - dev_docker
   pull_request:
     branch:
       - master
-      - dev_docker
 
 jobs:
 
