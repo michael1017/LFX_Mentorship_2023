@@ -23,6 +23,27 @@ Need to fulfill the basic install requirement, then install the following tools:
 
 ### Installation
 
+#### Docker Install
+The project builds the latest master branch image and publish it on [docker hub](https://hub.docker.com/r/mike1017/lfx_mentorship_2023/tags). The image contains compiled project binary called `x`.
+
+Pull the image from docker hub:
+
+```bash
+docker pull mike1017/lfx_mentorship_2023:latest
+```
+
+Execute the binary in container.
+
+```bash
+docker run --rm -it mike1017/lfx_mentorship_2023 ./x version
+docker run --rm -it mike1017/lfx_mentorship_2023 ./x wasm_app/wasm/add.wasm 1 2
+docker run --rm -it mike1017/lfx_mentorship_2023 ./x version wasm_app/wasm/add.wasm 1 2
+```
+
+![](./docs/images/docker_exec.png)
+
+#### Source Install 
+
 The project uses GNU Make system to build the source. Several things can be configured before starting to build. To learn more detail about configuration, please check [customize Makefile](docs/customize_makefile.md)
 
 For Basic Install: 
