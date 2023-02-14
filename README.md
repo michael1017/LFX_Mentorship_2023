@@ -29,10 +29,7 @@ The project builds the latest master branch image and publish it on [docker hub]
 Pull the image from docker hub:
 
 ```bash
-# For amd64 arch
 docker pull mike1017/lfx_mentorship_2023:latest
-# For arm arch
-docker pull mike1017/lfx_mentorship_2023:latest_arm
 ```
 
 Execute the binary in container.
