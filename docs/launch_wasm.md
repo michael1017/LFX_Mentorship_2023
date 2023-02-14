@@ -9,11 +9,12 @@ Following are the main steps to use WasmEdge C SDK to run Wasm WASI applications
 1. Create VM
 2. VM State Forward
 3. Get Function Type Context
-4. Get [Param, Return] Type and Length
+4. Get Param Type and Length
 5. Module Instance Init WASI
 6. Setup Wasm Params From ParseData
 7. Execute
-8. Get Return Data
+8. Get Return Type and Length
+9. Get Return Data
 
 ## Create VM
 Create a VM and add host registration to support WASI
@@ -79,28 +80,24 @@ WasmEdge_String FuncName = WasmEdge_StringCreateByCString("_start");
 const WasmEdge_FunctionTypeContext* FuncType = WasmEdge_VMGetFunctionType(VMCxt, FuncName);
 ```
 
-## Get [Param, Return] Type and Length
+## Get Param Type and Length
 
-After we get "function type context", we can get the type and length of function parameters and returns. In this step, we will compare the number of parameters and number of input arguments. If they are not the same and either the number of parameters or returns is non-zero, exit the program. 
+After we get "function type context", we can get the type and length of function parameters and returns. In this step, we will compare the number of parameters and number of input arguments. If they are not the same and the number of parameters is not equal to zero, exit the program. 
 
-The reason we need to do this check is because in [hello.rs](../wasm_app/wasm_hello/hello.rs), the main function would have no parameter and return. However, the main function takes the arguments passed to it. Therefore, we allow function with zero parameter and return continue running. Same implementation can be found in [wasmedge tool implementation](https://github.com/WasmEdge/WasmEdge/blob/8573df4cf82f10546f35e6a0523b010ffcf90d31/lib/driver/runtimeTool.cpp#L256).
+The reason we need to do this check is because in [hello.rs](../wasm_app/wasm_hello/hello.rs), the main function would have no parameter. However, the main function takes the arguments passed to it. Therefore, we allow function with zero parameter continue running. Same implementation can be found in [wasmedge tool implementation](https://github.com/WasmEdge/WasmEdge/blob/8573df4cf82f10546f35e6a0523b010ffcf90d31/lib/driver/runtimeTool.cpp#L256).
 
 ```cpp
-uint32_t ParamLen = WasmEdge_FunctionTypeGetParametersLength(FuncType);
-uint32_t ReturnLen = WasmEdge_FunctionTypeGetReturnsLength(FuncType);
-if (ParamLen + 1 != (unsigned int)opt->args_len && !(ParamLen == 0 && ReturnLen == 0)) {
+  uint32_t ParamLen = WasmEdge_FunctionTypeGetParametersLength(FuncType);
+  if (ParamLen + 1 != (unsigned int)opt->args_len && ParamLen != 0) {
     fprintf(stderr, _ERROR_SIG "Mismatch ParamLen and ArgsLen\n");
     WasmEdge_ConfigureDelete(ConfCxt);
     WasmEdge_VMDelete(VMCxt);
     WasmEdge_StringDelete(FuncName);
     return _FAILED;
-}
-enum WasmEdge_ValType* ParamBuf = malloc(sizeof(enum WasmEdge_ValType) * ParamLen);
-enum WasmEdge_ValType* ReturnBuf = malloc(sizeof(enum WasmEdge_ValType) * ReturnLen);
-WasmEdge_FunctionTypeGetParameters(FuncType, ParamBuf, ParamLen);
-WasmEdge_FunctionTypeGetReturns(FuncType, ReturnBuf, ReturnLen);
-WasmEdge_Value* Params = malloc(ParamLen * sizeof(WasmEdge_Value));
-WasmEdge_Value* Returns = malloc(ReturnLen * sizeof(WasmEdge_Value));
+  }
+  enum WasmEdge_ValType *ParamBuf = malloc(sizeof(enum WasmEdge_ValType) * ParamLen);
+  WasmEdge_FunctionTypeGetParameters(FuncType, ParamBuf, ParamLen);
+  WasmEdge_Value *Params = malloc(ParamLen * sizeof(WasmEdge_Value));
 ```
 
 ## Module Instance Init WASI
@@ -132,18 +129,28 @@ for (uint32_t i=0; i<ParamLen && i+1<(unsigned int)opt->args_len; i++) {
 
 ## Execute
 
-Now we use synchronous VM execution. Although we can easily turn synchronous VM execution to asynchronous, it is not necessary at this time.
+We use asynchronous VM execution, although it doesn't bring significant performance improve.
 
 ```cpp
-Res = WasmEdge_VMExecute(VMCxt, FuncName, Params, ParamLen, Returns, ReturnLen);
-// AsyncCxt = WasmEdge_VMAsyncExecute(VMCxt, FuncName, Params, ParamLen);
-// Res = WasmEdge_AsyncGet(AsyncCxt, Returns, ReturnLen);
+AsyncCxt = WasmEdge_VMAsyncExecute(VMCxt, FuncName, Params, ParamLen);
+
+```
+
+## Get Return Type and Length
+Create buffers for receiving function return type and value.
+
+```cpp
+uint32_t ReturnLen = WasmEdge_FunctionTypeGetReturnsLength(FuncType);
+enum WasmEdge_ValType *ReturnBuf = malloc(sizeof(enum WasmEdge_ValType) * ReturnLen);
+WasmEdge_FunctionTypeGetReturns(FuncType, ReturnBuf, ReturnLen);
+WasmEdge_Value *Returns = malloc(ReturnLen * sizeof(WasmEdge_Value));
 ```
 
 ## Get Return Data
 Print return values based on value types in ReturnBuf. Now the program can support I32, I64, F32 and F64. V128 should be easily supported. However, we need to have a V128 printer first.
 
 ```cpp
+Res = WasmEdge_AsyncGet(AsyncCxt, Returns, ReturnLen);
 for (uint32_t i=0; i<ReturnLen; i++) {
     if (ReturnBuf[i] == WasmEdge_ValType_I32) {
         printf("%d\n", WasmEdge_ValueGetI32(Returns[i]));

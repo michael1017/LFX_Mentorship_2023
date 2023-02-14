@@ -1,3 +1,5 @@
+/// @file handler.h
+/// @brief Accepts raw parsing data and execute.
 #ifndef HANDLER_H
 #define HANDLER_H
 

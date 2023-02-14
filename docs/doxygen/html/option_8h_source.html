@@ -69,30 +69,34 @@ $(function() {
 <div class="title">option.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef OPTION_H</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define OPTION_H</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<a href="option_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef OPTION_H</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#define OPTION_H</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structopt.html">opt</a> <a class="code" href="structopt.html">Option</a>;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="structopt.html">   13</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structopt.html">opt</a> {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  <span class="keywordtype">char</span> *opt_name;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  <span class="keywordtype">int</span> args_len;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  <span class="keywordtype">char</span> **args;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;  <span class="keywordtype">bool</span> found;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;};</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<a class="code" href="structopt.html">Option</a> *create_Option(<span class="keywordtype">char</span> *opt_name, <span class="keywordtype">int</span> args_len);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">bool</span> delete_Option(<a class="code" href="structopt.html">Option</a> *<a class="code" href="structopt.html">opt</a>);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordtype">bool</span> delete_Option_array(<a class="code" href="structopt.html">Option</a> **<a class="code" href="structopt.html">opt</a>, <span class="keywordtype">int</span> opt_len);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keywordtype">bool</span> show_opt(<span class="keyword">const</span> <a class="code" href="structopt.html">Option</a> *<a class="code" href="structopt.html">opt</a>);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* OPTION_H */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="astructopt_html"><div class="ttname"><a href="structopt.html">opt</a></div><div class="ttdoc">Option Struct.</div><div class="ttdef"><b>Definition:</b> option.h:13</div></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structopt.html">opt</a> <a class="code" href="structopt.html">Option</a>;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="structopt.html">   15</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structopt.html">opt</a> {</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  <span class="keywordtype">char</span> *opt_name;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;  <span class="keywordtype">int</span> args_len;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <span class="keywordtype">char</span> **args;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <span class="keywordtype">bool</span> found;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;};</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="option_8h.html#ab8d23c43c0b7a7564756b97238ae80a1">   27</a></span>&#160;<a class="code" href="structopt.html">Option</a> *<a class="code" href="option_8h.html#ab8d23c43c0b7a7564756b97238ae80a1">create_Option</a>(<span class="keywordtype">char</span> *opt_name, <span class="keywordtype">int</span> args_len);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="option_8h.html#aade81afb7c8d81cf95f523e6b5d142cc">   32</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="option_8h.html#aade81afb7c8d81cf95f523e6b5d142cc">delete_Option</a>(<a class="code" href="structopt.html">Option</a> *<a class="code" href="structopt.html">opt</a>);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="option_8h.html#a99a6befec1334c286ba3c8905798b864">   38</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="option_8h.html#a99a6befec1334c286ba3c8905798b864">delete_Option_array</a>(<a class="code" href="structopt.html">Option</a> **<a class="code" href="structopt.html">opt</a>, <span class="keywordtype">int</span> opt_len);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="option_8h.html#aaaffe175f6d01eb05c98b42a7c386e46">   43</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="option_8h.html#aaaffe175f6d01eb05c98b42a7c386e46">show_opt</a>(<span class="keyword">const</span> <a class="code" href="structopt.html">Option</a> *<a class="code" href="structopt.html">opt</a>);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* OPTION_H */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="aoption_8h_html_a99a6befec1334c286ba3c8905798b864"><div class="ttname"><a href="option_8h.html#a99a6befec1334c286ba3c8905798b864">delete_Option_array</a></div><div class="ttdeci">bool delete_Option_array(Option **opt, int opt_len)</div><div class="ttdoc">Delete a Option pointer array.</div></div>
+<div class="ttc" id="aoption_8h_html_aaaffe175f6d01eb05c98b42a7c386e46"><div class="ttname"><a href="option_8h.html#aaaffe175f6d01eb05c98b42a7c386e46">show_opt</a></div><div class="ttdeci">bool show_opt(const Option *opt)</div><div class="ttdoc">Print Option.</div></div>
+<div class="ttc" id="aoption_8h_html_aade81afb7c8d81cf95f523e6b5d142cc"><div class="ttname"><a href="option_8h.html#aade81afb7c8d81cf95f523e6b5d142cc">delete_Option</a></div><div class="ttdeci">bool delete_Option(Option *opt)</div><div class="ttdoc">Delete a Option pointer from create_Option().</div></div>
+<div class="ttc" id="aoption_8h_html_ab8d23c43c0b7a7564756b97238ae80a1"><div class="ttname"><a href="option_8h.html#ab8d23c43c0b7a7564756b97238ae80a1">create_Option</a></div><div class="ttdeci">Option * create_Option(char *opt_name, int args_len)</div><div class="ttdoc">Create a ParseData pointer, need to be deleted before exit execution.</div></div>
+<div class="ttc" id="astructopt_html"><div class="ttname"><a href="structopt.html">opt</a></div><div class="ttdoc">Option Struct.</div><div class="ttdef"><b>Definition:</b> option.h:15</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

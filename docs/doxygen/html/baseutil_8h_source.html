@@ -69,23 +69,25 @@ $(function() {
 <div class="title">baseutil.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef BASEUTIL_H</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define BASEUTIL_H</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<a href="baseutil_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef BASEUTIL_H</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#define BASEUTIL_H</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define _BOLD_RED &quot;\033[1m\033[31m&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define _RESET_COLOR &quot;\033[0m&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define _ERROR_SIG _BOLD_RED &quot;ERROR =&gt; &quot;</span> _RESET_COLOR</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define _SUCCESS true</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define _FAILED false</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define _NOT_FOUND -1</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">bool</span> is_null_ptr(<span class="keyword">const</span> <span class="keywordtype">void</span> *ptr, <span class="keyword">const</span> <span class="keywordtype">char</span> *func_name);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keywordtype">bool</span> is_file_exist(<span class="keyword">const</span> <span class="keywordtype">char</span> *fname);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BASEUTIL_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define _BOLD_RED &quot;\033[1m\033[31m&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define _RESET_COLOR &quot;\033[0m&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define _ERROR_SIG _BOLD_RED &quot;ERROR =&gt; &quot;</span> _RESET_COLOR</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define _SUCCESS true</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define _FAILED false</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#define _NOT_FOUND -1</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="baseutil_8h.html#a69d8c83f5f462b0228d1abcdecf42ed4">   19</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="baseutil_8h.html#a69d8c83f5f462b0228d1abcdecf42ed4">is_null_ptr</a>(<span class="keyword">const</span> <span class="keywordtype">void</span> *ptr, <span class="keyword">const</span> <span class="keywordtype">char</span> *func_name);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="baseutil_8h.html#a060d5c9853f5b2ad20c3e3e2e5188a5b">   24</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="baseutil_8h.html#a060d5c9853f5b2ad20c3e3e2e5188a5b">is_file_exist</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *fname);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BASEUTIL_H */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="abaseutil_8h_html_a060d5c9853f5b2ad20c3e3e2e5188a5b"><div class="ttname"><a href="baseutil_8h.html#a060d5c9853f5b2ad20c3e3e2e5188a5b">is_file_exist</a></div><div class="ttdeci">bool is_file_exist(const char *fname)</div><div class="ttdoc">Check If file exists or not.</div></div>
+<div class="ttc" id="abaseutil_8h_html_a69d8c83f5f462b0228d1abcdecf42ed4"><div class="ttname"><a href="baseutil_8h.html#a69d8c83f5f462b0228d1abcdecf42ed4">is_null_ptr</a></div><div class="ttdeci">bool is_null_ptr(const void *ptr, const char *func_name)</div><div class="ttdoc">Check if the pointer is a null pointer.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
