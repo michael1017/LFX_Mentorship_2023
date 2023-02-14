@@ -9,3 +9,4 @@ default.profraw
 test_out
 wasm_app/wasm_*/target
 wasm_app/wasm_*/Cargo.lock
+*/.DS_Store
