@@ -1,3 +1,5 @@
+/// @file argparse.h
+/// @brief Provides stuff for argument parsing and return raw parsing result.
 #ifndef ARGPARSE_H
 #define ARGPARSE_H
 

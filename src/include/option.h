@@ -1,3 +1,5 @@
+/// @file option.h
+/// @brief Basic functions for Option operation.
 #ifndef OPTION_H
 #define OPTION_H
 

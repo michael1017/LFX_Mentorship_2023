@@ -1,3 +1,5 @@
+/// @file baseutil.h
+/// @brief Basic functions for the whole project.
 #ifndef BASEUTIL_H
 #define BASEUTIL_H
 
