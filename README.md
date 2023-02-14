@@ -96,6 +96,7 @@ This section shows how I implemented the tool and provides screenshots of execut
 * [How To Add New Options](docs/add_option.md)
 * [Launch Wasm Use WasmEdge C SDK](docs/launch_wasm.md)
 * [Screenshots of Execution Results](./docs/execution_results.md)
+* [Project Manual](https://michael1017.github.io/LFX_Mentorship_2023/doxygen/html/dir_b0856f6b0d80ccb263b2f415c91f9e17.html)
 
 ## Reference
 
