@@ -7,25 +7,24 @@
 #include <stdlib.h>
 #include <string.h>
 
-ParseData *create_ParseData(void) {
+ParseData *create_ParseData(Option **opt, Option *remain_arg, int opt_len) {
   ParseData *pd = malloc(sizeof(ParseData));
-  pd->opt_len = 0;
-  pd->opt = NULL;
-  pd->remain_arg = create_Option(NULL, -1, _handle_option_wasm_arg);
+  pd->opt = opt;
+  pd->remain_arg = remain_arg;
+  pd->opt_len = opt_len;
   return pd;
 }
 
-bool delete_ParseData(ParseData *pd) {
-  if (is_null_ptr(pd, __func__))
-    return _FAILED;
-  delete_Option(pd->remain_arg);
+void delete_ParseData(ParseData *pd) {
+  if (pd == NULL)
+    return;
   free(pd);
-  return _SUCCESS;
+  return;
 }
 
-bool show_pd(const ParseData *pd) {
-  if (is_null_ptr(pd, __func__))
-    return _FAILED;
+void show_pd(const ParseData *pd) {
+  if (pd == NULL)
+    return;
 
   printf("Total Option Length: %d\n", pd->opt_len);
   for (int i = 0; i < pd->opt_len; i++) {
@@ -36,7 +35,7 @@ bool show_pd(const ParseData *pd) {
 
   printf("---remain_arg---\n");
   show_opt(pd->remain_arg);
-  return _SUCCESS;
+  return;
 }
 
 bool _set_option_args(Option *opt, int *arg_idx, const int argc, const char **argv) {
@@ -91,17 +90,13 @@ bool _get_option_index(int *index, const Option **opt, const int opt_len,
   return _SUCCESS;
 }
 
-bool handle_parse(ParseData *pd, Option **opt, const int opt_len, const int argc,
-                  const char **argv) {
+bool handle_parse(ParseData *pd, const int argc, const char **argv) {
   if (is_null_ptr(pd, __func__))
     return _FAILED;
 
   int arg_idx = 1;
   int opt_idx;
   bool state;
-
-  pd->opt_len = opt_len;
-  pd->opt = opt;
 
   while (arg_idx < argc) {
     // get option index

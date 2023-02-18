@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-Option *create_Option(char *opt_name, int args_len, bool (*handle_func)(const Option*)) {
+Option *create_Option(char *opt_name, int args_len, bool (*handle_func)(const Option *)) {
   Option *opt = malloc(sizeof(Option));
   opt->opt_name = opt_name;
   opt->args_len = args_len;
@@ -16,34 +16,30 @@ Option *create_Option(char *opt_name, int args_len, bool (*handle_func)(const Op
   return opt;
 }
 
-bool delete_Option(Option *opt) {
-  if (is_null_ptr(opt, __func__))
-    return _FAILED;
+void delete_Option(Option *opt) {
+  if (opt == NULL)
+    return;
   free(opt);
-  return _SUCCESS;
+  return;
 }
 
-bool delete_Option_array(Option **opt, int opt_len) {
-  if (is_null_ptr(opt, __func__))
-    return _FAILED;
-  if (opt_len < 0) {
-    fprintf(stderr, _ERROR_SIG "%s: delete_Option_array got opt_len < 0\n", __func__);
-    return _FAILED;
-  }
+void delete_Option_array(Option **opt, int opt_len) {
+  if (opt == NULL || opt_len <= 0)
+    return;
   for (int i = 0; i < opt_len; i++) {
     delete_Option(opt[i]);
   }
-  return _SUCCESS;
+  return;
 }
 
-bool show_opt(const Option *opt) {
-  if (is_null_ptr(opt, __func__))
-    return _FAILED;
-  printf("opt_name: %s\n", opt->opt_name);
+void show_opt(const Option *opt) {
+  if (opt == NULL)
+    return;
+  printf("opt_name: %s\n", opt->opt_name == NULL ? "NULL" : opt->opt_name);
   printf("args_len: %d\n", opt->args_len);
   printf("found: %d\n", opt->found);
   for (int i = 0; i < opt->args_len; i++) {
     printf("args[%d]: %s\n", i, opt->args[i]);
   }
-  return _SUCCESS;
+  return;
 }

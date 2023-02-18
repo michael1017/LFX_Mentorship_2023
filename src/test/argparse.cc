@@ -2,32 +2,30 @@ extern "C" {
 #include "argparse.h"
 
 #include "baseutil.h"
+#include "handler.h"
 #include "option.h"
 }
 #include <gtest/gtest.h>
 #include <stdbool.h>
+#include <stdio.h>
+
 
 TEST(argparse, create_ParseData) {
   ParseData *pd = NULL;
-  pd = create_ParseData();
+  Option *define_opt[] = {create_Option((char *)"d", 3, handle_option_null),
+                          create_Option((char *)"a", 0, handle_option_null),
+                          create_Option((char *)"b", 2, handle_option_null),
+                          create_Option((char *)"c", -1, handle_option_null)
+
+  };
+  Option *remain_arg = create_Option((char*)NULL, -1, handle_option_null);
+  const int define_opt_len = sizeof(define_opt) / sizeof(Option *);
+  pd = create_ParseData(define_opt, remain_arg, define_opt_len);
 
   EXPECT_NE(pd, nullptr);
-
+  delete_Option(remain_arg);
+  delete_Option_array(define_opt, define_opt_len);
   delete_ParseData(pd);
-}
-
-TEST(argparse, delete_ParseData) {
-  ParseData *pd = create_ParseData();
-
-  EXPECT_EQ(NULL, _FAILED);
-  EXPECT_EQ(delete_ParseData(pd), _SUCCESS);
-}
-
-TEST(argparse, show_pd) {
-  ParseData *pd = create_ParseData();
-
-  EXPECT_EQ(show_pd(NULL), _FAILED);
-  EXPECT_EQ(show_pd(pd), _SUCCESS);
 }
 
 TEST(argparse, _set_option_args) {
@@ -40,8 +38,10 @@ TEST(argparse, _set_option_args) {
   int start_point;
   int arg_idx1, arg_idx2;
 
-  Option *define_opt[] = {create_Option((char *)"a", 0), create_Option((char *)"b", 2),
-                          create_Option((char *)"c", -1)};
+  Option *define_opt[] = {create_Option((char *)"a", 0, handle_option_null),
+                          create_Option((char *)"b", 2, handle_option_null),
+                          create_Option((char *)"c", -1, handle_option_null)};
+  int define_opt_len = sizeof(define_opt) / sizeof(Option *);
 
   // NULL POINTER TEST
   EXPECT_EQ(_set_option_args(NULL, NULL, fake_argc1, fake_argv1), _FAILED);
@@ -86,17 +86,20 @@ TEST(argparse, _set_option_args) {
   // ARG_IDX RANGE TEST
   arg_idx2 = fake_argc2;
   EXPECT_EQ(_set_option_args(define_opt[2], &arg_idx2, fake_argc2, fake_argv2), _FAILED);
+
+  delete_Option_array(define_opt, define_opt_len);
 }
 
 TEST(argparse, _get_option_index) {
   int index;
 
-  Option *define_opt[] = {create_Option((char *)"a", 0), create_Option((char *)"b", 2),
-                          create_Option((char *)"c", -1)};
+  Option *define_opt[] = {create_Option((char *)"a", 0, handle_option_null),
+                          create_Option((char *)"b", 2, handle_option_null),
+                          create_Option((char *)"c", -1, handle_option_null)};
   int define_opt_len = sizeof(define_opt) / sizeof(Option *);
   // NULL INDEX TEST
   EXPECT_EQ(_get_option_index(NULL, (const Option **)define_opt, define_opt_len,
-                             (const char *)"a"),
+                              (const char *)"a"),
             _FAILED);
 
   // NULL OPT TEST
@@ -105,40 +108,46 @@ TEST(argparse, _get_option_index) {
 
   // TEST 1-1
   EXPECT_EQ(_get_option_index(&index, (const Option **)define_opt, define_opt_len,
-                             (const char *)"a"),
+                              (const char *)"a"),
             _SUCCESS);
   EXPECT_EQ(index, 0);
   // TEST 1-2
   EXPECT_EQ(_get_option_index(&index, (const Option **)define_opt, define_opt_len,
-                             (const char *)"b"),
+                              (const char *)"b"),
             _SUCCESS);
   EXPECT_EQ(index, 1);
   // TEST 1-3
   EXPECT_EQ(_get_option_index(&index, (const Option **)define_opt, define_opt_len,
-                             (const char *)"c"),
+                              (const char *)"c"),
             _SUCCESS);
   EXPECT_EQ(index, 2);
   // TEST 1-4
   EXPECT_EQ(_get_option_index(&index, (const Option **)define_opt, define_opt_len,
-                             (const char *)"d"),
+                              (const char *)"d"),
             _SUCCESS);
   EXPECT_EQ(index, _NOT_FOUND);
+
+  delete_Option_array(define_opt, define_opt_len);
 }
 
 TEST(argparse, handle_parse) {
   { // TEST 1
-    ParseData *pd = create_ParseData();
-    Option *define_opt[] = {create_Option((char *)"d", 3), create_Option((char *)"a", 0),
-                            create_Option((char *)"b", 2), create_Option((char *)"c", -1)
+
+    Option *define_opt[] = {create_Option((char *)"d", 3, handle_option_null),
+                            create_Option((char *)"a", 0, handle_option_null),
+                            create_Option((char *)"b", 2, handle_option_null),
+                            create_Option((char *)"c", -1, handle_option_null)
 
     };
+    Option *remain_arg = create_Option(NULL, -1, handle_option_null);
     const int define_opt_len = sizeof(define_opt) / sizeof(Option *);
+    ParseData *pd = create_ParseData(define_opt, remain_arg, define_opt_len);
 
     const char *fake_argv[] = {"./x", "a", "b", "b1", "b2", "c", "c1"};
     const int fake_argc = sizeof(fake_argv) / sizeof(char *);
-
-    handle_parse(pd, define_opt, define_opt_len, fake_argc, fake_argv);
-
+    printf("hello1\n");
+    handle_parse(pd, fake_argc, fake_argv);
+    printf("hello2\n");
     EXPECT_EQ(pd->opt_len, define_opt_len);
     EXPECT_NE(pd->opt, nullptr);
 
@@ -153,21 +162,28 @@ TEST(argparse, handle_parse) {
 
     EXPECT_EQ(pd->opt[3]->args, fake_argv + 6);
     EXPECT_TRUE(pd->opt[3]->found);
+
+    delete_Option(remain_arg);
+    delete_Option_array(define_opt, define_opt_len);
     delete_ParseData(pd);
   }
-
+  printf("hello3\n");
   { // TEST 2
-    ParseData *pd = create_ParseData();
-    Option *define_opt[] = {create_Option((char *)"d", 3), create_Option((char *)"a", 0),
-                            create_Option((char *)"b", 2), create_Option((char *)"c", -1)
+
+    Option *define_opt[] = {create_Option((char *)"d", 3, handle_option_null),
+                            create_Option((char *)"a", 0, handle_option_null),
+                            create_Option((char *)"b", 2, handle_option_null),
+                            create_Option((char *)"c", -1, handle_option_null)
 
     };
+    Option *remain_arg = create_Option(NULL, -1, handle_option_null);
     const int define_opt_len = sizeof(define_opt) / sizeof(Option *);
+    ParseData *pd = create_ParseData(define_opt, remain_arg, define_opt_len);
 
     const char *fake_argv[] = {"./x", "z", "z1", "z2"};
     const int fake_argc = sizeof(fake_argv) / sizeof(char *);
 
-    handle_parse(pd, define_opt, define_opt_len, fake_argc, fake_argv);
+    handle_parse(pd, fake_argc, fake_argv);
 
     EXPECT_EQ(pd->opt[0]->args, nullptr);
     EXPECT_EQ(pd->opt[1]->args, nullptr);
@@ -181,6 +197,8 @@ TEST(argparse, handle_parse) {
     EXPECT_EQ(pd->remain_arg->args, fake_argv + 1);
     EXPECT_TRUE(pd->remain_arg->found);
 
+    delete_Option(remain_arg);
+    delete_Option_array(define_opt, define_opt_len);
     delete_ParseData(pd);
   }
 }

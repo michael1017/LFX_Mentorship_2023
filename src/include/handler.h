@@ -6,9 +6,11 @@
 #include "argparse.h"
 #include "option.h"
 
-bool _handle_option_version(const Option *opt);
+bool handle_option_null(const Option *opt);
 
-bool _handle_option_wasm_arg(const Option *opt);
+bool handle_option_version(const Option *opt);
+
+bool handle_option_wasm_arg(const Option *opt);
 
 /// @brief Handle parsing result from ParseData.
 /// @param pd is a ParseData pointer.

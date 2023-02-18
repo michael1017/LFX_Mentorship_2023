@@ -16,7 +16,7 @@ typedef struct opt {
   int args_len;
   char **args;
   bool found;
-  bool (*handle_func)(const struct opt*);
+  bool (*handle_func)(const struct opt *);
 } Option;
 
 /// @brief Create a ParseData pointer, need to be deleted before exit execution.
@@ -25,22 +25,19 @@ typedef struct opt {
 /// @param func_ptr pointer of option handler (option handler should be a function).
 /// all arguments after it.
 /// @return return Option pointer.
-Option *create_Option(char *opt_name, int args_len, bool (*handle_func)(const Option*));
+Option *create_Option(char *opt_name, int args_len, bool (*handle_func)(const Option *));
 
 /// @brief Delete a Option pointer from create_Option().
 /// @param opt is a Option pointer.
-/// @return Return true if pointer is successfully deleted. Return false if not.
-bool delete_Option(Option *opt);
+void delete_Option(Option *opt);
 
 /// @brief Delete a Option pointer array.
 /// @param opt is a Option pointer array.
 /// @param opt_len is the length of Option pointer array.
-/// @return Return true if pointer is successfully deleted. Return false if not.
-bool delete_Option_array(Option **opt, int opt_len);
+void delete_Option_array(Option **opt, int opt_len);
 
 /// @brief Print Option
 /// @param opt is a Option pointer
-/// @return Return true if success. Return false if not.
-bool show_opt(const Option *opt);
+void show_opt(const Option *opt);
 
 #endif /* OPTION_H */

@@ -7,12 +7,17 @@
 #include <string.h>
 #include <wasmedge/wasmedge.h>
 
-bool _handle_option_version(const Option *opt) {
+bool handle_option_null(const Option *opt) {
+  // do nothing
+  return _SUCCESS;
+}
+
+bool handle_option_version(const Option *opt) {
   printf("WasmEdge version: %s\n", WasmEdge_VersionGet());
   return _SUCCESS;
 }
 
-bool _handle_option_wasm_arg(const Option *opt) {
+bool handle_option_wasm_arg(const Option *opt) {
   // Create VM
   WasmEdge_ConfigureContext *ConfCxt = WasmEdge_ConfigureCreate();
   WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_Wasi);
@@ -121,19 +126,20 @@ bool handle_option(const ParseData *pd) {
 
     state = pd->opt[i]->handle_func(pd->opt[i]);
     if (state == _FAILED) {
-      fprintf(stderr, _ERROR_SIG "%s: Option '%s' handle_func failed\n", __func__, pd->opt[i]->opt_name);
+      fprintf(stderr, _ERROR_SIG "%s: Option '%s' handle_func failed\n", __func__,
+              pd->opt[i]->opt_name);
       return _FAILED;
     }
   }
 
   // run wasm app
   if (pd->remain_arg->found == true) {
-    state = _handle_option_wasm_arg(pd->remain_arg);
+    state = handle_option_wasm_arg(pd->remain_arg);
   }
   if (state == _FAILED) {
-    fprintf(stderr, _ERROR_SIG "%s: handle_option_wasm_arg failed\n", __func__);
-    return _FAILED;
-  }
+      fprintf(stderr, _ERROR_SIG "%s: remain_arg handle_func failed\n", __func__);
+      return _FAILED;
+    }
 
   return _SUCCESS;
 }
