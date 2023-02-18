@@ -9,7 +9,6 @@ extern "C" {
 #include <stdbool.h>
 #include <stdio.h>
 
-
 TEST(argparse, create_ParseData) {
   ParseData *pd = NULL;
   Option *define_opt[] = {create_Option((char *)"d", 3, handle_option_null),
@@ -18,7 +17,7 @@ TEST(argparse, create_ParseData) {
                           create_Option((char *)"c", -1, handle_option_null)
 
   };
-  Option *remain_arg = create_Option((char*)NULL, -1, handle_option_null);
+  Option *remain_arg = create_Option((char *)NULL, -1, handle_option_null);
   const int define_opt_len = sizeof(define_opt) / sizeof(Option *);
   pd = create_ParseData(define_opt, remain_arg, define_opt_len);
 

@@ -7,7 +7,7 @@ WORKDIR /tmp
 
 # System Update, Install Dependency
 RUN apt update -y && \ 
-    apt install -y clang llvm make cmake git curl clang-format doxygen texlive-latex-base
+    apt install -y clang llvm make cmake git curl clang-format doxygen
 
 # Rust Install
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --target wasm32-wasi
