@@ -75,18 +75,20 @@ $(function() {
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="argparse_8h.html">argparse.h</a>&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="option_8h.html">option.h</a>&quot;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keywordtype">bool</span> _handle_option_version(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keywordtype">bool</span> handle_option_null(<span class="keyword">const</span> <a class="code" href="structopt.html">Option</a> *<a class="code" href="structopt.html">opt</a>);</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keywordtype">bool</span> _handle_option_wasm_arg(<span class="keyword">const</span> <a class="code" href="structopt.html">Option</a> *<a class="code" href="structopt.html">opt</a>);</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keywordtype">bool</span> handle_option_version(<span class="keyword">const</span> <a class="code" href="structopt.html">Option</a> *<a class="code" href="structopt.html">opt</a>);</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="handler_8h.html#acdb79af5a559ff6bfe46449a14da9457">   16</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="handler_8h.html#acdb79af5a559ff6bfe46449a14da9457">handle_option</a>(<span class="keyword">const</span> <a class="code" href="structpd.html">ParseData</a> *<a class="code" href="structpd.html">pd</a>);</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HANDLER_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keywordtype">bool</span> handle_option_wasm_arg(<span class="keyword">const</span> <a class="code" href="structopt.html">Option</a> *<a class="code" href="structopt.html">opt</a>);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="handler_8h.html#acdb79af5a559ff6bfe46449a14da9457">   18</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="handler_8h.html#acdb79af5a559ff6bfe46449a14da9457">handle_option</a>(<span class="keyword">const</span> <a class="code" href="structpd.html">ParseData</a> *<a class="code" href="structpd.html">pd</a>);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* HANDLER_H */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="aargparse_8h_html"><div class="ttname"><a href="argparse_8h.html">argparse.h</a></div><div class="ttdoc">Provides stuff for argument parsing and return raw parsing result.</div></div>
 <div class="ttc" id="ahandler_8h_html_acdb79af5a559ff6bfe46449a14da9457"><div class="ttname"><a href="handler_8h.html#acdb79af5a559ff6bfe46449a14da9457">handle_option</a></div><div class="ttdeci">bool handle_option(const ParseData *pd)</div><div class="ttdoc">Handle parsing result from ParseData.</div></div>
 <div class="ttc" id="aoption_8h_html"><div class="ttname"><a href="option_8h.html">option.h</a></div><div class="ttdoc">Basic functions for Option operation.</div></div>
-<div class="ttc" id="astructopt_html"><div class="ttname"><a href="structopt.html">opt</a></div><div class="ttdoc">Option Struct.</div><div class="ttdef"><b>Definition:</b> option.h:15</div></div>
-<div class="ttc" id="astructpd_html"><div class="ttname"><a href="structpd.html">pd</a></div><div class="ttdoc">ParseData Struct.</div><div class="ttdef"><b>Definition:</b> argparse.h:14</div></div>
+<div class="ttc" id="astructopt_html"><div class="ttname"><a href="structopt.html">opt</a></div><div class="ttdoc">Option Struct.</div><div class="ttdef"><b>Definition:</b> option.h:14</div></div>
+<div class="ttc" id="astructpd_html"><div class="ttname"><a href="structpd.html">pd</a></div><div class="ttdoc">ParseData Struct.</div><div class="ttdef"><b>Definition:</b> argparse.h:13</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
