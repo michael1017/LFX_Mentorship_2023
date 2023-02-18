@@ -2,8 +2,8 @@ extern "C" {
 #include "baseutil.h"
 
 #include "argparse.h"
-#include "option.h"
 #include "handler.h"
+#include "option.h"
 }
 #include <gtest/gtest.h>
 #include <stdbool.h>
