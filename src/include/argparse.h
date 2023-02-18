@@ -6,30 +6,30 @@
 #include "option.h"
 #include <stdbool.h>
 
-typedef struct pd ParseData;
 /// @brief ParseData Struct
-/// @param opt_len is the length of opt
 /// @param opt is a Option pointer array.
 /// @param remain_arg is a Option pointer. It contains arguments not belong to any option.
-struct pd {
-  int opt_len;
+/// @param opt_len is the length of opt
+typedef struct pd {
   Option **opt;
   Option *remain_arg;
-};
+  int opt_len;
+} ParseData;
 
 /// @brief Create a ParseData pointer, need to be deleted before exit execution.
+/// @param opt is a Option pointer array.
+/// @param remain_arg is a Option pointer. It contains arguments not belong to any option.
+/// @param opt_len is the length of opt
 /// @return Return ParseData pointer.
-ParseData *create_ParseData(void);
+ParseData *create_ParseData(Option **opt, Option *remain_arg, int opt_len);
 
 /// @brief Delete a ParseData pointer from create_ParseData().
 /// @param pd ParseData pointer
-/// @return Return true if pointer is successfully deleted. Return false if not.
-bool delete_ParseData(ParseData *pd);
+void delete_ParseData(ParseData *pd);
 
 /// @brief Print ParseData
 /// @param pd is a ParseData pointer
-/// @return Return true if success. Return false if not.
-bool show_pd(const ParseData *pd);
+void show_pd(const ParseData *pd);
 
 bool _set_option_args(Option *, int *, const int, const char **);
 
@@ -37,12 +37,9 @@ bool _get_option_index(int *, const Option **, const int, const char *);
 
 /// @brief Parse argv and return result to ParseData pointer
 /// @param pd is a ParseData pointer. It is used to get parsing result.
-/// @param opt is a Option pointer array. It contains user defined options.
-/// @param opt_len is the length of opt.
 /// @param argc is length of argv.
 /// @param argv constains arguments pass from CLI.
 /// @return Return true if success. Return false if not.
-bool handle_parse(ParseData *pd, Option **opt, const int opt_len, const int argc,
-                  const char **argv);
+bool handle_parse(ParseData *pd, const int argc, const char **argv);
 
 #endif /* ARGPARSE_H */

@@ -30,4 +30,5 @@ RUN git clone https://github.com/michael1017/LFX_Mentorship_2023.git app
 WORKDIR /app
 RUN source $HOME/.wasmedge/env && \
     source $HOME/.cargo/env && \
-    make -j all test
+    make -j all test && \
+    ./x_testall

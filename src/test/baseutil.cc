@@ -3,15 +3,16 @@ extern "C" {
 
 #include "argparse.h"
 #include "option.h"
+#include "handler.h"
 }
 #include <gtest/gtest.h>
 #include <stdbool.h>
 
 TEST(baseutil, is_null_ptr) {
   const Option *opt_null = NULL;
-  const Option *opt = create_Option(NULL, -1);
+  const Option *opt = create_Option(NULL, -1, handle_option_null);
   const ParseData *pd_null = NULL;
-  const ParseData *pd = create_ParseData();
+  const ParseData *pd = create_ParseData(NULL, NULL, 0);
   const char *c_null = NULL;
   const char c = 'c';
 

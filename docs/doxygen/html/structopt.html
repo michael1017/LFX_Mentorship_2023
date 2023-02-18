@@ -88,6 +88,9 @@ char **&#160;</td><td class="memItemRight" valign="bottom"><b>args</b></td></tr>
 <tr class="memitem:a2672bed991b28340920827e376e8e28a"><td class="memItemLeft" align="right" valign="top"><a id="a2672bed991b28340920827e376e8e28a"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>found</b></td></tr>
 <tr class="separator:a2672bed991b28340920827e376e8e28a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6958fe13501891498e16086f2ddde53"><td class="memItemLeft" align="right" valign="top"><a id="ae6958fe13501891498e16086f2ddde53"></a>
+bool(*&#160;</td><td class="memItemRight" valign="bottom"><b>handle_func</b> )(const struct <a class="el" href="structopt.html">opt</a> *)</td></tr>
+<tr class="separator:ae6958fe13501891498e16086f2ddde53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Option Struct. </p>
@@ -97,6 +100,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>found</b></td></tr>
     <tr><td class="paramname">args_len</td><td>args length. </td></tr>
     <tr><td class="paramname">args</td><td>char pointer arrary. It contains arguments. </td></tr>
     <tr><td class="paramname">found</td><td>initialize to false. Set to true if the option is found. </td></tr>
+    <tr><td class="paramname">handle_func</td><td>pointer of option handler. </td></tr>
   </table>
   </dd>
 </dl>

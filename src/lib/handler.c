@@ -7,12 +7,17 @@
 #include <string.h>
 #include <wasmedge/wasmedge.h>
 
-bool _handle_option_version(void) {
+bool handle_option_null(const Option *opt) {
+  // do nothing
+  return _SUCCESS;
+}
+
+bool handle_option_version(const Option *opt) {
   printf("WasmEdge version: %s\n", WasmEdge_VersionGet());
   return _SUCCESS;
 }
 
-bool _handle_option_wasm_arg(const Option *opt) {
+bool handle_option_wasm_arg(const Option *opt) {
   // Create VM
   WasmEdge_ConfigureContext *ConfCxt = WasmEdge_ConfigureCreate();
   WasmEdge_ConfigureAddHostRegistration(ConfCxt, WasmEdge_HostRegistration_Wasi);
@@ -114,34 +119,27 @@ bool _handle_option_wasm_arg(const Option *opt) {
 
 bool handle_option(const ParseData *pd) {
   // Handle options' argument
-  int opt_run_idx = -1;
   bool state;
   for (int i = 0; i < pd->opt_len; i++) {
     if (pd->opt[i]->found == false)
       continue;
 
-    if (strcmp("version", pd->opt[i]->opt_name) == 0) { // Option version
-      state = _handle_option_version();
-      if (state == _FAILED) {
-        fprintf(stderr, _ERROR_SIG "%s: handle_option_version failed\n", __func__);
-        return _FAILED;
-      }
-    } else if (strcmp("run", pd->opt[i]->opt_name) == 0) { // Option run
-      // handle with remain arg
-      opt_run_idx = i;
+    state = pd->opt[i]->handle_func(pd->opt[i]);
+    if (state == _FAILED) {
+      fprintf(stderr, _ERROR_SIG "%s: Option '%s' handle_func failed\n", __func__,
+              pd->opt[i]->opt_name);
+      return _FAILED;
     }
   }
 
   // run wasm app
-  if (opt_run_idx != -1) {
-    state = _handle_option_wasm_arg(pd->opt[opt_run_idx]);
-  } else if (pd->remain_arg->found == true) { // expect to be wasm arg
-    state = _handle_option_wasm_arg(pd->remain_arg);
+  if (pd->remain_arg->found == true) {
+    state = handle_option_wasm_arg(pd->remain_arg);
   }
   if (state == _FAILED) {
-    fprintf(stderr, _ERROR_SIG "%s: handle_option_wasm_arg failed\n", __func__);
-    return _FAILED;
-  }
+      fprintf(stderr, _ERROR_SIG "%s: remain_arg handle_func failed\n", __func__);
+      return _FAILED;
+    }
 
   return _SUCCESS;
 }

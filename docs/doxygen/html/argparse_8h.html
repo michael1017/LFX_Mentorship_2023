@@ -99,84 +99,132 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a878801863f3944b17c4f4b87c07e6e0a"><td class="memItemLeft" align="right" valign="top"><a id="a878801863f3944b17c4f4b87c07e6e0a"></a>
-typedef struct <a class="el" href="structpd.html">pd</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ParseData</b></td></tr>
+<tr class="memitem:a878801863f3944b17c4f4b87c07e6e0a"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structpd.html">pd</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="argparse_8h.html#a878801863f3944b17c4f4b87c07e6e0a">ParseData</a></td></tr>
+<tr class="memdesc:a878801863f3944b17c4f4b87c07e6e0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">ParseData Struct.  <a href="argparse_8h.html#a878801863f3944b17c4f4b87c07e6e0a">More...</a><br /></td></tr>
 <tr class="separator:a878801863f3944b17c4f4b87c07e6e0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:afc6580e298aee65af153226a6efc9b3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structpd.html">ParseData</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="argparse_8h.html#afc6580e298aee65af153226a6efc9b3c">create_ParseData</a> (void)</td></tr>
-<tr class="memdesc:afc6580e298aee65af153226a6efc9b3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a ParseData pointer, need to be deleted before exit execution.  <a href="argparse_8h.html#afc6580e298aee65af153226a6efc9b3c">More...</a><br /></td></tr>
-<tr class="separator:afc6580e298aee65af153226a6efc9b3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8cc7b2a915d08cdebc040eb0fa8c7c0a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="argparse_8h.html#a8cc7b2a915d08cdebc040eb0fa8c7c0a">delete_ParseData</a> (<a class="el" href="structpd.html">ParseData</a> *<a class="el" href="structpd.html">pd</a>)</td></tr>
-<tr class="memdesc:a8cc7b2a915d08cdebc040eb0fa8c7c0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a ParseData pointer from <a class="el" href="argparse_8h.html#afc6580e298aee65af153226a6efc9b3c" title="Create a ParseData pointer, need to be deleted before exit execution.">create_ParseData()</a>.  <a href="argparse_8h.html#a8cc7b2a915d08cdebc040eb0fa8c7c0a">More...</a><br /></td></tr>
-<tr class="separator:a8cc7b2a915d08cdebc040eb0fa8c7c0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30c3e7a0c1222d1247e334da6cc8bc5e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="argparse_8h.html#a30c3e7a0c1222d1247e334da6cc8bc5e">show_pd</a> (const <a class="el" href="structpd.html">ParseData</a> *<a class="el" href="structpd.html">pd</a>)</td></tr>
-<tr class="memdesc:a30c3e7a0c1222d1247e334da6cc8bc5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print ParseData.  <a href="argparse_8h.html#a30c3e7a0c1222d1247e334da6cc8bc5e">More...</a><br /></td></tr>
-<tr class="separator:a30c3e7a0c1222d1247e334da6cc8bc5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b536badee91450c47afbeb7482467c7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="argparse_8h.html#a878801863f3944b17c4f4b87c07e6e0a">ParseData</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="argparse_8h.html#a7b536badee91450c47afbeb7482467c7">create_ParseData</a> (<a class="el" href="option_8h.html#a46ef4de948dd9ed888843fb019dc87a1">Option</a> **<a class="el" href="structopt.html">opt</a>, <a class="el" href="option_8h.html#a46ef4de948dd9ed888843fb019dc87a1">Option</a> *remain_arg, int opt_len)</td></tr>
+<tr class="memdesc:a7b536badee91450c47afbeb7482467c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a ParseData pointer, need to be deleted before exit execution.  <a href="argparse_8h.html#a7b536badee91450c47afbeb7482467c7">More...</a><br /></td></tr>
+<tr class="separator:a7b536badee91450c47afbeb7482467c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a189e056fe5e66233f3b3f9ecb8522eb9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="argparse_8h.html#a189e056fe5e66233f3b3f9ecb8522eb9">delete_ParseData</a> (<a class="el" href="argparse_8h.html#a878801863f3944b17c4f4b87c07e6e0a">ParseData</a> *<a class="el" href="structpd.html">pd</a>)</td></tr>
+<tr class="memdesc:a189e056fe5e66233f3b3f9ecb8522eb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a ParseData pointer from <a class="el" href="argparse_8h.html#a7b536badee91450c47afbeb7482467c7" title="Create a ParseData pointer, need to be deleted before exit execution.">create_ParseData()</a>.  <a href="argparse_8h.html#a189e056fe5e66233f3b3f9ecb8522eb9">More...</a><br /></td></tr>
+<tr class="separator:a189e056fe5e66233f3b3f9ecb8522eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae7f027bc85a5cee090a69d1f56fbca8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="argparse_8h.html#aae7f027bc85a5cee090a69d1f56fbca8">show_pd</a> (const <a class="el" href="argparse_8h.html#a878801863f3944b17c4f4b87c07e6e0a">ParseData</a> *<a class="el" href="structpd.html">pd</a>)</td></tr>
+<tr class="memdesc:aae7f027bc85a5cee090a69d1f56fbca8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print ParseData.  <a href="argparse_8h.html#aae7f027bc85a5cee090a69d1f56fbca8">More...</a><br /></td></tr>
+<tr class="separator:aae7f027bc85a5cee090a69d1f56fbca8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a662dbe787c10f2858f79ea8091aeefa0"><td class="memItemLeft" align="right" valign="top"><a id="a662dbe787c10f2858f79ea8091aeefa0"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>_set_option_args</b> (<a class="el" href="structopt.html">Option</a> *, int *, const int, const char **)</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>_set_option_args</b> (<a class="el" href="option_8h.html#a46ef4de948dd9ed888843fb019dc87a1">Option</a> *, int *, const int, const char **)</td></tr>
 <tr class="separator:a662dbe787c10f2858f79ea8091aeefa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f65095b0365c93d46b5215c4a4a4561"><td class="memItemLeft" align="right" valign="top"><a id="a5f65095b0365c93d46b5215c4a4a4561"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>_get_option_index</b> (int *, const <a class="el" href="structopt.html">Option</a> **, const int, const char *)</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>_get_option_index</b> (int *, const <a class="el" href="option_8h.html#a46ef4de948dd9ed888843fb019dc87a1">Option</a> **, const int, const char *)</td></tr>
 <tr class="separator:a5f65095b0365c93d46b5215c4a4a4561"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aedcd8a78600ff9258f1453b846fd2056"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="argparse_8h.html#aedcd8a78600ff9258f1453b846fd2056">handle_parse</a> (<a class="el" href="structpd.html">ParseData</a> *<a class="el" href="structpd.html">pd</a>, <a class="el" href="structopt.html">Option</a> **<a class="el" href="structopt.html">opt</a>, const int opt_len, const int argc, const char **argv)</td></tr>
-<tr class="memdesc:aedcd8a78600ff9258f1453b846fd2056"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse argv and return result to ParseData pointer.  <a href="argparse_8h.html#aedcd8a78600ff9258f1453b846fd2056">More...</a><br /></td></tr>
-<tr class="separator:aedcd8a78600ff9258f1453b846fd2056"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dc711776d37a0b3feb1f123f1c31b72"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="argparse_8h.html#a4dc711776d37a0b3feb1f123f1c31b72">handle_parse</a> (<a class="el" href="argparse_8h.html#a878801863f3944b17c4f4b87c07e6e0a">ParseData</a> *<a class="el" href="structpd.html">pd</a>, const int argc, const char **argv)</td></tr>
+<tr class="memdesc:a4dc711776d37a0b3feb1f123f1c31b72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse argv and return result to ParseData pointer.  <a href="argparse_8h.html#a4dc711776d37a0b3feb1f123f1c31b72">More...</a><br /></td></tr>
+<tr class="separator:a4dc711776d37a0b3feb1f123f1c31b72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides stuff for argument parsing and return raw parsing result. </p>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="afc6580e298aee65af153226a6efc9b3c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afc6580e298aee65af153226a6efc9b3c">&#9670;&nbsp;</a></span>create_ParseData()</h2>
+</div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="a878801863f3944b17c4f4b87c07e6e0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a878801863f3944b17c4f4b87c07e6e0a">&#9670;&nbsp;</a></span>ParseData</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structpd.html">ParseData</a>* create_ParseData </td>
+          <td class="memname">typedef struct <a class="el" href="structpd.html">pd</a> <a class="el" href="argparse_8h.html#a878801863f3944b17c4f4b87c07e6e0a">ParseData</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ParseData Struct. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">opt</td><td>is a Option pointer array. </td></tr>
+    <tr><td class="paramname">remain_arg</td><td>is a Option pointer. It contains arguments not belong to any option. </td></tr>
+    <tr><td class="paramname">opt_len</td><td>is the length of opt </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a7b536badee91450c47afbeb7482467c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b536badee91450c47afbeb7482467c7">&#9670;&nbsp;</a></span>create_ParseData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="argparse_8h.html#a878801863f3944b17c4f4b87c07e6e0a">ParseData</a>* create_ParseData </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="option_8h.html#a46ef4de948dd9ed888843fb019dc87a1">Option</a> **&#160;</td>
+          <td class="paramname"><em>opt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="option_8h.html#a46ef4de948dd9ed888843fb019dc87a1">Option</a> *&#160;</td>
+          <td class="paramname"><em>remain_arg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>opt_len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Create a ParseData pointer, need to be deleted before exit execution. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">opt</td><td>is a Option pointer array. </td></tr>
+    <tr><td class="paramname">remain_arg</td><td>is a Option pointer. It contains arguments not belong to any option. </td></tr>
+    <tr><td class="paramname">opt_len</td><td>is the length of opt </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>Return ParseData pointer. </dd></dl>
 
 </div>
 </div>
-<a id="a8cc7b2a915d08cdebc040eb0fa8c7c0a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8cc7b2a915d08cdebc040eb0fa8c7c0a">&#9670;&nbsp;</a></span>delete_ParseData()</h2>
+<a id="a189e056fe5e66233f3b3f9ecb8522eb9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a189e056fe5e66233f3b3f9ecb8522eb9">&#9670;&nbsp;</a></span>delete_ParseData()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool delete_ParseData </td>
+          <td class="memname">void delete_ParseData </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structpd.html">ParseData</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="argparse_8h.html#a878801863f3944b17c4f4b87c07e6e0a">ParseData</a> *&#160;</td>
           <td class="paramname"><em>pd</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Delete a ParseData pointer from <a class="el" href="argparse_8h.html#afc6580e298aee65af153226a6efc9b3c" title="Create a ParseData pointer, need to be deleted before exit execution.">create_ParseData()</a>. </p>
+<p>Delete a ParseData pointer from <a class="el" href="argparse_8h.html#a7b536badee91450c47afbeb7482467c7" title="Create a ParseData pointer, need to be deleted before exit execution.">create_ParseData()</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pd</td><td>ParseData pointer </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Return true if pointer is successfully deleted. Return false if not. </dd></dl>
 
 </div>
 </div>
-<a id="aedcd8a78600ff9258f1453b846fd2056"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aedcd8a78600ff9258f1453b846fd2056">&#9670;&nbsp;</a></span>handle_parse()</h2>
+<a id="a4dc711776d37a0b3feb1f123f1c31b72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dc711776d37a0b3feb1f123f1c31b72">&#9670;&nbsp;</a></span>handle_parse()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -184,20 +232,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_get_option_index</b>
         <tr>
           <td class="memname">bool handle_parse </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structpd.html">ParseData</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="argparse_8h.html#a878801863f3944b17c4f4b87c07e6e0a">ParseData</a> *&#160;</td>
           <td class="paramname"><em>pd</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structopt.html">Option</a> **&#160;</td>
-          <td class="paramname"><em>opt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const int&#160;</td>
-          <td class="paramname"><em>opt_len</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -223,8 +259,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_get_option_index</b>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pd</td><td>is a ParseData pointer. It is used to get parsing result. </td></tr>
-    <tr><td class="paramname">opt</td><td>is a Option pointer array. It contains user defined options. </td></tr>
-    <tr><td class="paramname">opt_len</td><td>is the length of opt. </td></tr>
     <tr><td class="paramname">argc</td><td>is length of argv. </td></tr>
     <tr><td class="paramname">argv</td><td>constains arguments pass from CLI. </td></tr>
   </table>
@@ -234,16 +268,16 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_get_option_index</b>
 
 </div>
 </div>
-<a id="a30c3e7a0c1222d1247e334da6cc8bc5e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a30c3e7a0c1222d1247e334da6cc8bc5e">&#9670;&nbsp;</a></span>show_pd()</h2>
+<a id="aae7f027bc85a5cee090a69d1f56fbca8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae7f027bc85a5cee090a69d1f56fbca8">&#9670;&nbsp;</a></span>show_pd()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool show_pd </td>
+          <td class="memname">void show_pd </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structpd.html">ParseData</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="argparse_8h.html#a878801863f3944b17c4f4b87c07e6e0a">ParseData</a> *&#160;</td>
           <td class="paramname"><em>pd</em></td><td>)</td>
           <td></td>
         </tr>
@@ -257,7 +291,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_get_option_index</b>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Return true if success. Return false if not. </dd></dl>
 
 </div>
 </div>
