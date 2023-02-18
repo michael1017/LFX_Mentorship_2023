@@ -6,12 +6,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-Option *create_Option(char *opt_name, int args_len) {
+Option *create_Option(char *opt_name, int args_len, bool (*handle_func)(const Option*)) {
   Option *opt = malloc(sizeof(Option));
   opt->opt_name = opt_name;
   opt->args_len = args_len;
   opt->args = NULL;
   opt->found = false;
+  opt->handle_func = handle_func;
   return opt;
 }
 

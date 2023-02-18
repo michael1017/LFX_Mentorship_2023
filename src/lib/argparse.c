@@ -1,6 +1,7 @@
 #include "argparse.h"
 
 #include "baseutil.h"
+#include "handler.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,7 +11,7 @@ ParseData *create_ParseData(void) {
   ParseData *pd = malloc(sizeof(ParseData));
   pd->opt_len = 0;
   pd->opt = NULL;
-  pd->remain_arg = create_Option(NULL, -1);
+  pd->remain_arg = create_Option(NULL, -1, _handle_option_wasm_arg);
   return pd;
 }
 

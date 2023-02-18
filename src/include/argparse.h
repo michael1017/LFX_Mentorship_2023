@@ -6,16 +6,15 @@
 #include "option.h"
 #include <stdbool.h>
 
-typedef struct pd ParseData;
 /// @brief ParseData Struct
 /// @param opt_len is the length of opt
 /// @param opt is a Option pointer array.
 /// @param remain_arg is a Option pointer. It contains arguments not belong to any option.
-struct pd {
+typedef struct pd {
   int opt_len;
   Option **opt;
   Option *remain_arg;
-};
+} ParseData;
 
 /// @brief Create a ParseData pointer, need to be deleted before exit execution.
 /// @return Return ParseData pointer.

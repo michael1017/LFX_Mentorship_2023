@@ -10,7 +10,8 @@
 
 int main(const int argc, const char **argv) {
   ParseData *pd = create_ParseData();
-  Option *define_opt[] = {create_Option("version", 0), create_Option("run", -1)};
+  Option *define_opt[] = {create_Option("version", 0, _handle_option_version),
+                          create_Option("run", -1, _handle_option_wasm_arg)};
   int define_opt_len = sizeof(define_opt) / sizeof(Option *);
 
   handle_parse(pd, (Option **)define_opt, define_opt_len, argc, argv);

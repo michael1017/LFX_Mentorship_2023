@@ -6,7 +6,7 @@
 #include "argparse.h"
 #include "option.h"
 
-bool _handle_option_version(void);
+bool _handle_option_version(const Option *opt);
 
 bool _handle_option_wasm_arg(const Option *opt);
 
