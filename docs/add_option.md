@@ -5,28 +5,30 @@
 To add new options, there are three main steps:
 
 1. Define Options
-2. Pass Argument Parsing
-3. Handle Options
+2. Create ParseData
+3. Argument Parsing
+4. Handle Options
 
 By following the steps, programmer can:
 
 1. easily add new options
 2. create handlers for different options independently
+3. Add new feature by modifying struct Option and ParseData.
 
 This is the main function of the program, I will use it as an example in the following sections.
 
-```cc
-int main(const int argc, const char** argv) {
-  ParseData* pd = create_ParseData();
-  Option* define_opt[] = {
-    create_Option("version", 0), 
-    create_Option("run", -1)
-  };
-  int define_opt_len = sizeof(define_opt)/sizeof(Option*);
-  
-  handle_parse(pd, (Option ** )define_opt, define_opt_len, argc, argv);
+```cpp
+int main(const int argc, const char **argv) {
+  Option *define_opt[] = {create_Option("version", 0, handle_option_version),
+                          create_Option("run", -1, handle_option_wasm_arg)};
+  Option *remain_arg = create_Option(NULL, -1, handle_option_wasm_arg);
+  int define_opt_len = sizeof(define_opt) / sizeof(Option *);
+  ParseData *pd = create_ParseData(define_opt, remain_arg, define_opt_len);
+
+  handle_parse(pd, argc, argv);
   handle_option(pd);
 
+  delete_Option(remain_arg);
   delete_Option_array(define_opt, define_opt_len);
   delete_ParseData(pd);
   return 0;
@@ -37,49 +39,48 @@ int main(const int argc, const char** argv) {
 
 Define option tells the program which options should be handled.
 
-In the main function, we can see a function called `create_Option` inside `define_opt` array. The first argument of the `create_Option` is option's name, and the second is expected argument length after the option. If the argument length set to `-1`, it means the option will accept all the arguments after it.
+In the main function, we can see a function called `create_Option` inside `define_opt` array. 
 
-For instance, to add a new option called "new_opt" with argument length equal to two, just simply add `create_Option("new_opt", 2)` to the `define_opt` array.
+1. The first argument of the `create_Option` is option's name.
+2. The second is the expected argument length after the option.
+3. The last is the function pointer of option handler. 
 
-```cc
-Option* define_opt[] = {
-    create_Option("version", 0), 
-    create_Option("run", -1),
-    create_Option("new_opt", 2)
-};
+If the argument length is set to `-1`, it means that the option will accept all the arguments after it. To get more detail about `create_Option` please refer to [option.h File Reference](https://michael1017.github.io/LFX_Mentorship_2023/doxygen/html/option_8h.html)
+
+For instance, to add a new option called "new_opt" with argument length equal to two, just simply add `create_Option("new_opt", 2, handle_option_null)` to the `define_opt` array. `handle_option_null` will do nothing for our "new_opt". User can create their own option handler which accepts a Option pointer and return a bool.
+
+```cpp
+Option *define_opt[] = {create_Option("version", 0, handle_option_version),
+                        create_Option("run", -1, handle_option_wasm_arg),
+                        create_Option("new_opt", 2, handle_option_null)};
+Option *remain_arg = create_Option(NULL, -1, handle_option_wasm_arg);
 ```
 
-The structure of Option:
+Create a option handler
 
-```cc
-typedef struct opt Option;
-struct opt{
-  char* opt_name;
-  int args_len;
-  char** args;
-  bool found;
-};
+```cpp
+bool handle_option_costume(Option *opt) {
+  ...
+  return _SUCCESS;
+}
+```
+
+## Create ParseData
+After we set up options, we need three parameters to create ParseData `pd`. Option `remain_arg` is used to handle arguments not belong to any options. To get more detail about `create_ParseData` please refer to [argparse.h File Reference](https://michael1017.github.io/LFX_Mentorship_2023/doxygen/html/argparse_8h.html)
+
+
+```cpp
+ParseData *pd = create_ParseData(define_opt, remain_arg, define_opt_len);
 ```
 
 ## Argument Parsing
 
-The task of argument parsing is to find out the location of the `define_opt` in argv.
+The task of argument parsing is to find out the location of options in argv.
 
-The program use `handle_parse` to take care of the task and return the result to `pd`. If the arguments are not belong to any options, be will be collected to `remain_arg`.
-
-```cc
-handle_parse(pd, (Option ** )define_opt, define_opt_len, argc, argv);
-```
-
-The structure of ParseData:
+The program use `handle_parse` to take care of the task and return the result to `pd`. If the arguments are not belong to any options, they will be collected to `remain_arg`.
 
 ```cc
-typedef struct pd ParseData;
-struct pd{
-  int opt_len;
-  Option** opt;
-  Option* remain_arg;
-};
+handle_parse(pd, argc, argv);
 ```
 
 If the new option is correctly added to the `define_opt`, `handle_parse` should be able to get the arguments for the new option.
@@ -95,24 +96,6 @@ We can easily see that "new_opt" catches two arguments called "a" and "b". Since
 
 ## Handle Options
 
-The task of handle options is to deal with the options' arguments and the arguments not belong to any option. To get more detail, please check the `handle_option` function in [source code](../src/lib/handler.c)
+The task of handle options is to execute the option handler if the option is found in the provided arguments.
 
-For instance, if "version" option is given, it will run `handle_option_version` and print out the wasm version.
-
-```cc
-if (strcmp("version", pd->opt[i]->opt_name) == 0) {
-  state = handle_option_version();
-  if (state == _FAILED){
-    fprintf(stderr, _ERROR_SIG "%s: handle_option_version failed\n", __func__);
-    return _FAILED;
-  }
-}
-```
-
-To add a new option handler for "new_opt", simply add a else if statement and write your code inside of it.
-
-```cc
-else if (strcmp("new_opt", pd->opt[i]->opt_name) == 0) {
-  // Write your code here.
-}
-```
+For instance, if "version" option is given, it will run the option handler `handle_option_version` and print out the wasm version.

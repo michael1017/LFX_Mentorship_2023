@@ -16,8 +16,6 @@ int main(const int argc, const char **argv) {
   ParseData *pd = create_ParseData(define_opt, remain_arg, define_opt_len);
 
   handle_parse(pd, argc, argv);
-  show_pd(pd);
-  
   handle_option(pd);
 
   delete_Option(remain_arg);
