@@ -2,7 +2,7 @@
 
 ## Introduction
 
-To add new options, there are three main steps:
+To add new options, there are few steps:
 
 1. Define Options
 2. Create ParseData
