@@ -4,7 +4,7 @@
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
+#include <sys/stat.h> 
 
 bool is_null_ptr(const void *ptr, const char *func_name) {
   if (ptr != NULL)
@@ -12,5 +12,3 @@ bool is_null_ptr(const void *ptr, const char *func_name) {
   fprintf(stderr, _ERROR_SIG "function '%s' get null pointer\n", func_name);
   return true;
 }
-
-bool is_file_exist(const char *fname) { return access(fname, F_OK) == 0; }

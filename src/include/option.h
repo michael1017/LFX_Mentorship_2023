@@ -22,8 +22,8 @@ typedef struct opt {
 /// @brief Create a ParseData pointer, need to be deleted before exit execution.
 /// @param opt_name is the name of option.
 /// @param args_len is the expected length of arguments. -1 means the option will accept
-/// @param func_ptr pointer of option handler (option handler should be a function).
 /// all arguments after it.
+/// @param func_ptr pointer of option handler (option handler should be a function).
 /// @return return Option pointer.
 Option *create_Option(char *opt_name, int args_len, bool (*handle_func)(const Option *));
 
