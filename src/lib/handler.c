@@ -102,6 +102,7 @@ bool handle_option_wasm_arg(const Option *opt) {
   }
 
   /* Resources deallocations. */
+  WasmEdge_AsyncDelete(AsyncCxt);
   WasmEdge_ConfigureDelete(ConfCxt);
   WasmEdge_VMDelete(VMCxt);
   WasmEdge_StringDelete(FuncName);

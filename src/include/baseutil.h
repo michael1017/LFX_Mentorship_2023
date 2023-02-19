@@ -18,9 +18,5 @@
 /// @return If is null pointer, return true. If not, return false.
 bool is_null_ptr(const void *ptr, const char *func_name);
 
-/// @brief Check If file exists or not.
-/// @param fname is the file path.
-/// @return If exists, return true. If not, return false.
-bool is_file_exist(const char *fname);
 
 #endif /* BASEUTIL_H */

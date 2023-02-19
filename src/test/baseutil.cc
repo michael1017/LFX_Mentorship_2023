@@ -27,9 +27,3 @@ TEST(baseutil, is_null_ptr) {
   delete_Option((Option *)opt);
   delete_ParseData((ParseData *)pd);
 }
-
-TEST(baseutil, is_file_exist) {
-  EXPECT_FALSE(is_file_exist(NULL));
-  EXPECT_FALSE(is_file_exist("/dev/null/foo"));
-  EXPECT_TRUE(is_file_exist("/dev/null"));
-}
