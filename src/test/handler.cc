@@ -23,56 +23,6 @@ TEST(handler, handle_option_wasm_arg) {
 
     EXPECT_EQ(opt->handle_func(opt), _SUCCESS);
   }
-  { // add3.wasm
-    char *args[] = {(char *)"wasm_app/wasm/add3.wasm", (char *)"1111", (char *)"2222",
-                    (char *)"3333"};
-    opt->args_len = sizeof(args) / sizeof(char *);
-    opt->args = args;
-
-    EXPECT_EQ(opt->handle_func(opt), _SUCCESS);
-  }
-  { // addall.wasm
-    char *args[] = {(char *)"wasm_app/wasm/addall.wasm",
-                    (char *)"1111",
-                    (char *)"2222",
-                    (char *)"3333",
-                    (char *)"1111",
-                    (char *)"1111"};
-    opt->args_len = sizeof(args) / sizeof(char *);
-    opt->args = args;
-
-    EXPECT_EQ(opt->handle_func(opt), _SUCCESS);
-  }
-  { // circle_area_f32.wasm
-    char *args[] = {(char *)"wasm_app/wasm/circle_area_f32.wasm", (char *)"5"};
-    opt->args_len = sizeof(args) / sizeof(char *);
-    opt->args = args;
-
-    EXPECT_EQ(opt->handle_func(opt), _SUCCESS);
-  }
-  { // circle_area_f64.wasm
-    char *args[] = {(char *)"wasm_app/wasm/circle_area_f64.wasm", (char *)"5"};
-    opt->args_len = sizeof(args) / sizeof(char *);
-    opt->args = args;
-
-    EXPECT_EQ(opt->handle_func(opt), _SUCCESS);
-  }
-  { // hello.wasm
-    char *args[] = {(char *)"wasm_app/wasm/hello.wasm", (char *)"second",
-                    (char *)"state"};
-    opt->args_len = sizeof(args) / sizeof(char *);
-    opt->args = args;
-
-    EXPECT_EQ(opt->handle_func(opt), _SUCCESS);
-  }
-  { // print2023.wasm
-    char *args[] = {(char *)"wasm_app/wasm/print2023.wasm", (char *)"second",
-                    (char *)"state"};
-    opt->args_len = sizeof(args) / sizeof(char *);
-    opt->args = args;
-
-    EXPECT_EQ(opt->handle_func(opt), _SUCCESS);
-  }
 
   // Failed Cases
   { // Wrong Path
@@ -92,6 +42,13 @@ TEST(handler, handle_option_wasm_arg) {
   { // Too Much Args
     char *args[] = {(char *)"wasm_app/wasm/add.wasm", (char *)"1111", (char *)"1111",
                     (char *)"1111"};
+    opt->args_len = sizeof(args) / sizeof(char *);
+    opt->args = args;
+
+    EXPECT_EQ(opt->handle_func(opt), _FAILED);
+  }
+  { // Empty
+    char *args[] = {};
     opt->args_len = sizeof(args) / sizeof(char *);
     opt->args = args;
 

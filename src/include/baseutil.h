@@ -18,5 +18,4 @@
 /// @return If is null pointer, return true. If not, return false.
 bool is_null_ptr(const void *ptr, const char *func_name);
 
-
 #endif /* BASEUTIL_H */

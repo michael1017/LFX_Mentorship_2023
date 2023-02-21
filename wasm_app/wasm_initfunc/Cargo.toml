@@ -1,0 +1,12 @@
+[package]
+name = "initfunc"
+version = "0.1.0"
+authors = ["ubuntu"]
+edition = "2018"
+
+[lib]
+name = "initfunc"
+path = "initfunc.rs"
+crate-type =["cdylib"]
+
+[dependencies]
