@@ -4,7 +4,7 @@
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/stat.h> 
+#include <sys/stat.h>
 
 bool is_null_ptr(const void *ptr, const char *func_name) {
   if (ptr != NULL)
